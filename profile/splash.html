@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Kim Slawson: Designer &amp; Developer</title>
+  <meta name="description" content="Design: Optimized user experience for mobile, web, and print media. &para; Development: Quickly, accurately iterates from mockup or vision to reality. &para; Support: Local IT support and solutions for businesses and individuals. &para; Technology: Software, hardware, and networking on desktop and mobile devices.">
+  <meta name="author" content="Kim Slawson">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="/css/fonts/CharisSIL-webfont.css" type="text/css">
+  <link rel="stylesheet" href="/css/fonts/poppins-webfont.css" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/vendors/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/vendors/gridforms/gridforms.css">
+  <link rel="stylesheet" type="text/css" href="/vendors/css/grid.css">
+  <link rel="stylesheet" href="/css/go2science.css">
+
+  <!--[if lt IE 9]>
+    <script src="/vendors/js/respond.min.js"></script>
+  <!-- <![endif] -->
+  <script src="/vendors/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/init.js"></script>
+
+  <link href="/vendors/headsupgrid/hugrid.css" type="text/css" rel="stylesheet" />
+<!--  <script src="headsupgrid/jquery-1.6.2.min.js"></script> -->
+  <script src="/vendors/headsupgrid/hugrid.js"></script>
+  <script type="text/javascript">
+/* not responsive
+      $(document).ready(function() {
+
+          pageUnits = 'px';
+          colUnits = 'px';
+          pagewidth = 1008;
+          columns = 12;
+          columnwidth = 69.33;
+          gutterwidth = 16;
+          pagetopmargin = 0;
+          rowheight = 26.4;
+          gridonload = 'off';
+          makehugrid();
+          setgridonload();
+      });
+*/
+
+
+      definegrid = function() {
+        var browserWidth = $(window).width(); 
+        if (browserWidth >= 1024) /* ((1008)-(16*11))/12 = 69.3333 */
+        {
+            pageUnits = 'px';
+            colUnits = 'px';
+            pagewidth = 1008;
+            columns = 12;
+            columnwidth = 69.33;
+            gutterwidth = 16;
+            pagetopmargin = 0;
+            rowheight = 26;
+            gridonload = 'off';
+            makehugrid();
+        } 
+        if (browserWidth <= 768) /* ((752)-(16*11))/12 = 48 */ 
+        {
+            pageUnits = 'px';
+            colUnits = 'px';
+            pagewidth = 752;
+            columns = 12;
+            columnwidth = 48;
+            gutterwidth = 16;
+            pagetopmargin = 0;
+            rowheight = 26;
+            gridonload = 'off';
+            makehugrid();
+        }
+        if (browserWidth <= 480) /* ((464)-(16*11))/12 = 24 */ 
+        {
+            pageUnits = 'px';
+            colUnits = 'px';
+            pagewidth = 464; 
+            columns = 12;
+            columnwidth = 24;
+            gutterwidth = 16;
+            pagetopmargin = 0;
+            rowheight = 26;
+            gridonload = 'off';
+            makehugrid();
+        }
+    }
+    $(document).ready(function() {
+        definegrid();
+        setgridonload();
+    });    
+  </script>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1a98fc">
+  <meta name="apple-mobile-web-app-title" content="go₂Science">
+  <meta name="application-name" content="go₂Science">
+  <meta name="msapplication-TileColor" content="#1a98fc">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+</head>
+<body>
+  <div id="container">
+    <header class="row z8 fixed">
+      <div class="limiter">
+        <div class="col title">
+          <img id="logo" class="fitheight" src="/siteicon.png">
+          <h1><a href="#">go&#8322;Science</a></h1>
+        </div>
+        <nav class="col">
+          <span class="phone"><a class="hamburger" href="#">&#9776; Menu</a></span> <!-- 9776 trigram for heaven works in font, 2261, 2630 -->
+          <ul class="tablet desktop closed">
+            <li><a href="#teachers">Teachers</a></li>
+            <li><a href="#students">Students</a></li>
+            <li><a href="#investors">Investors</a></li>
+            <li><a href="#partners">Partners</a></li>
+          </ul>
+        </nav>
+        <div class="col cta">
+          <a class="button button-primary cta" href="/mission.html">Access Lesson</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="banner">
+          <div class="row limiter">
+            <div class="col">
+              <h2 class="title">go&#8322;Science</h2>
+              <div class="randomizer">
+                <p>Connecting students and science</p>
+                <p>Connecting classrooms with content</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col video">
+            <div class="video wrapper">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/bsSN0xfTd3c?theme=light&amp;color=white&amp;autohide=2&amp;modestbranding=1&amp;frameborder=0&amp;rel=0&amp;showinfo=0"  frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="col why">
+            <h2>Why go&#8322;Science?</h2>
+            <ul>
+              <li>foo</li>
+              <li>bar</li>
+              <li>baz</li>
+              <li>quux</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row limiter signup">
+          <div class="col signup">
+            <form name="splash-signup" id="splash-signup" class="grid-form" method="post" action="/success-prealpha.html">
+              <div data-row-span="3">
+                <div data-field-span="1">
+                  <label>Email Address</label>
+                  <input type="email" name="email" id="email" required>
+                </div>
+                <div data-field-span="1">
+                  <label>Location</label>
+                  <input type="text" name="location" id="location" required>
+                </div>
+                <div data-field-span="1">
+                  <label>Grade Level</label>
+                  <input type="radio" name="gradeLevel" value="K" required>K
+                  <input type="radio" name="gradeLevel" value="1">1 
+                  <input type="radio" name="gradeLevel" value="2">2
+                </div>
+              </div>
+
+              <input type="hidden" name="_to" value="go2SciEd@gmail.com">
+              <input type="hidden" name="_cc" value="beth.a.heidemann@gmail.com">
+              <input type="hidden" name="_cc" value="ccbentley00@gmail.com">
+              <input type="hidden" name="_cc" value="kimslawson+go2science@gmail.com">
+              <input type="hidden" name="_subject" value="Go2Science inquiry">
+              <input type="text" name="_gotcha" style="display: none;">
+          </div>
+          <div class="col signup-submit">
+              <input type="submit" class="button-primary cta" value="Get involved!">
+            </form>
+          </div>
+        </div>
+      </section>
+      <section class="bios">
+        <div class="banner">
+          <div class="row limiter">
+            <div class="col">
+              <h2 class="title">About us</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col photo left">
+            <h3 class="tablet desktop">&nbsp;</h3>
+            <img class="beth" alt="Beth Heidemann" src="/img/beth.jpg">
+          </div>
+          <div class="col info">
+            <h3 class="title">Beth Heidemann</h3>
+            <p>Beth is a veteran teacher with 24 years experience teaching kindergarten and has a degree in Human Ecology from College of the Atlantic in Bar Harbor, Maine.  As a Nationally Board Certified Early Childhood Generalist, she works to educate the whole child.  Her students learn and grow through passion-driven service-learning projects.  Along with her students, she was honored by Next Generation Global Education for their work towards increasing food security.  She worked with her community to create outdoor learning spaces including a nature trail, community garden, and orchard at her small, rural, high-poverty school.  Her passion for science education ultimately earned a her Presidential Award for Excellence in Math and Science teaching.  This is one of the highest honors bestowed upon our nation's teachers.  She served on the practitioner advisory panel for <a href="https://www.nap.edu/catalog/19401/transforming-the-workforce-for-children-birth-through-age-8-a">a pivotal report</a> on early childhood by the Institute of Medicine and National Academy of Sciences.  Her love of meaningful integration of technology in the early childhood classroom earned her a National Semiconductor Innovative Educator Award in 1999.  Always modeling curiosity and lifelong learning, Beth continues to experiment and innovate.  She is currently a Skype Master Teacher and PBS Learning Media Innovative educator.  She was most recently honored by the state as County Teacher of the Year.  When Beth is not in the classroom she enjoys travel, yoga, music, glitter, and most of all hula hooping!</p>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col photo right">
+            <h3 class="tablet desktop">&nbsp;</h3>
+            <img class="curtis" alt="Curtis Bently" src="/img/curtis.jpg">
+          </div>
+          <div class="col info right">
+            <h3 class="title">Curtis Bently</h3>
+            <p>Curtis’ life long passion for science, especially paleontology, began as a child in Iowa.  After an early career as a drummer in a rock band, Curtis returned to school to earn degrees in biology (while working as a researcher in the South Carolina State Museum), geography, and law.  USA Today twice spotlighted him as an undergraduate student to watch. This combination of skills landed him a job in Washington, DC in a prestigious position as a trial attorney for the Department of Justice in the Environmental Enforcement Section.  Curtis went on to work for Maine State Legislature helping legislators make laws primarily dealing with critters but throughout his life, Curtis has pursued scientific and paleontological endeavours (including giving talks in elementary schools.)  Specimens he has collected can be found in numerous museum such as South Carolina State Museum, The Florida Museum of Natural History, and the Smithsonian National Museum of Natural History.  Curtis has six scientific publications to his credit and discovered a new species of extinct sea turtle, Corsochelys bentleyi, that was named in his honor.  Curtis loves triathlons and is a two-time Ironman finisher and has competed in half-Ironman, Olympic and sprint distance triathlons. When he is not digging for fossils or preparing skeletons for study, he can be found running, biking, swimming, traveling around the world or banging on his drums!</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="teachers">
+        <div class="banner">
+          <div class="row limiter">
+            <div class="col">
+              <a name="teachers" class="anchor">&nbsp;</a>
+              <h2 class="title">For teachers</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col pitch">
+            <h2>Pitch</h2>
+            <p>go&#8322;Science is awesome!</p>
+          </div>
+          <div class="col cta" style="margin-top: 3.5em;">
+            <a class="button button-primary cta" href="/mission.html">Join us</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="students">
+        <div class="banner">
+          <div class="row limiter">
+            <div class="col">
+              <a name="students" class="anchor">&nbsp;</a>
+              <h2 class="title">For students</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="investors">
+        <div class="banner">
+          <div class="row limiter">
+            <div class="col">
+              <a name="investors" class="anchor">&nbsp;</a>
+              <h2 class="title">For investors</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="partners">
+        <div class="banner">
+          <div class="row limiter">
+            <div class="col">
+              <a name="partners" class="anchor">&nbsp;</a>
+              <h2 class="title">Our partners</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col photo left">
+            <h3 class="tablet desktop">&nbsp;</h3>
+            <img class="michael" alt="Michael Soskil" src="/img/michael.jpg">
+          </div>
+          <div class="col info">
+            <h3 class="title">Michael Soskin</h3>
+            <p>Michael is two time finalist for the "Nobel Prize of Teaching," the Global Teacher Prize. As a STEM education, global collaboration, and technology integration expert, he has developed and presented numerous professional learning sessions for K-12 teachers, educational media outlets, and social innovators from around the world. In 2014 the White House and the National Science Foundation presented him the highest honors that the United States bestows upon math and science teachers: The Presidential Award for Excellence in Math and Science Teaching. His use of technology as a transformational learning tool has led the Pennsylvania Department of Education as well as numerous companies and non-profit organizations to laud his innovative classroom practices. Currently he works at the Wallenpaupack Area School District in Northeastern Pennsylvania as an elementary science teacher where he helps empower students to believe they can use their learning to change the world for the better.  When Mike is not in the classroom or globe trotting, he can be found running or visiting Disney World with his wife and two children.</p>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col photo right">
+            <h3 class="tablet desktop">&nbsp;</h3>
+            <img class="margo" alt="Margo Murphy" src="/img/margo.jpg">
+          </div>
+          <div class="col info right">
+            <h3 class="title">Margo Murphy</h3>
+            <p>Margo has been involved in many different aspects of science education.  A major interest and focus has been to understand content and concepts that students will need in order to be full and active participants in our changing world.  She is the chair of the Advisory Council for the National Academy of Science and serves on the Maine Mathematics and Science Alliance focused on Maine initiatives and the Teacher Advisory Council for the National Academy of Sciences, Engineering and Medicine/ National Research Council.  Some of Margo’s many awards include the Presidential Innovation Award for Environmental Educators, the Lou Lambert Outstanding Science Teacher award, the Environmental Educator of the Year award, and the Presidential Award for Excellence in Science Education.  Margo is  the advisor for the student group, called the Windplanners, who are responsible for a $500,000 wind turbine project that cut the school’s energy costs and garnered many accolades and awards.  Margo is a long time registered Maine guide but mostly canoes/kayaks, swims, bikes and hikes these days with friends and family rather than clients.</p>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col photo left">
+            <h3 class="tablet desktop">&nbsp;</h3>
+            <img class="jed" alt="Jed Dearybury" src="/img/jed.jpg">
+          </div>
+          <div class="col info">
+            <h3 class="title">Jed Dearybury</h3>
+            <p>Jed is an award winning early childhood/elementary teacher from Spartanburg, South Carolina.  He has been named County Reading Teacher of the Year, Presidential Award for Excellence in Math and Science Teaching Award Winner,  Top 5 finalist for SC Teacher of the Year, Donors Choose Innovator, and GQ Male Leader of the Year for 2013.  His passion for education and helping teachers “sparkle” is contagious. He is a frequent presenter at state and national conferences, where he models best practices with technology, music, drama, visual, and performing arts for the regular classroom educator. Jed is a donorschoose.org guru.  He has had over 100 projects funded for his students, totaling over $25,000 in materials! He also serves on the education council for the Lily, Sarah, Grace Fund. LSG is a nonprofit organization that helps fund the arts in underfunded public schools across the nation and provides inquiry based learning professional development to educators seeking to break out of the traditional education box. When he isn't teaching, he is running! So far he has completed 5 full marathons, 10 half marathons, countless 10k and 5k races.</p>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col cta right" style="margin-top: 3.5em;">
+            <a class="button button-primary cta">Partner <br class="phone smalltablet"> with us</a>
+          </div>
+          <div class="col you right">
+            <h3 class="title">You?</h3>
+            <p>Do you want to change the world? You can help by starting in the classroom. We need motivated people of all stripes to help us.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="banner">
+        <div class="row limiter">
+          <div class="col">
+            <h2>Information</h2>
+            <ul>
+              <li>Legal</li>
+              <li>Accessibility</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row limiter">
+          <div class="col">
+    <p class="ephemera"><span class="copyright"><span class="nobr-small">Copyright &copy; 2016 go&#8322;Science.</span> <span class="nobr-small">All Rights Reserved</span></span><span class="dingus">&nbsp;&nbsp;&#128049;&nbsp;&#128054;&nbsp;&nbsp;</span><span class="attribution"><span class="nobr-small">Designed &amp; Developed by</span> <span class="nobr-small"><a href="http://slawson.org/">Kernel Panic Consulting</a></span></p>
+            <a name="teachers" class="anchor">&nbsp;</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

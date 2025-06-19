@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    margin: 0.5 0;
+}
+    
+.experience {
+    width: 50%;
+    padding: 0.5em;
+}
+.experience:first-of-type {
+    margin-top: 0;
+}
+
+.position {
+    border: 1px solid grey;
+    background-color: white;
+    z-index: 10;
+    position: relative;
+    margin: 0.5em 0;
+}
+
+.date {
+    margin-bottom: 0.5em;
+}
+
+.title {
+    display: inline-block;
+    width: 100%;
+    padding: 0.5em;
+/*    border: 1px solid grey; */
+    background-color: grey;
+    color: white;
+}
+
+.position.kp {
+    min-height: 100em;
+}
+
+/* media queries for bigger screens */
+
+@media only screen and (min-width: 768px) {
+
+/* make a left column */
+    .wrapper {
+        margin-left: 100px;
+    }
+
+/* move dates to left column */
+    .date {
+        position: absolute;
+        margin-top: 1em;
+        left: 0;
+        width: 58%;
+        padding: 0.25em;
+        border-bottom: 1px solid grey;
+    }
+    .date.first {
+        width: 110px;
+    }
+}

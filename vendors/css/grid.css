@@ -1,0 +1,194 @@
+/* Dead Simple Grid (c) 2015 Vladimir Agafonkin */
+
+.row .row { margin:  0 -8px; }
+.col      { padding: 0  8px; }
+
+.row:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media only screen { .col {
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}}
+
+/* go2science custom grid */
+
+/* phone */
+@media only screen and (max-width: 480px) {
+  .desktop { display: none; }
+  .smalltablet { display: none; }
+  .tablet { display: none; }
+  .phone { display: block; }
+
+  header .title.col { width: 50%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  nav.col { width: 25%; }
+  nav span.phone { text-align: left; }
+  nav > ul.open {
+    height: auto;
+    display: inline-block;
+    padding: 0px 8px;
+  padding: 0; /* better menu integration */
+    position: relative;
+    left: -8px;
+    z-index: 8;
+    border: 1px solid white;
+    background-color: white;
+    box-shadow: -8px 8px 8px -8px rgba(0,0,0,.5), 8px 8px 8px -8px rgba(0,0,0,.5);
+  box-shadow: 0px 0px 8px 0px black; /* better menu integration */
+  }
+  nav > ul.open::before { /* better menu integration */
+    background-color: white;
+    height: 8px;
+    display: block;
+    content: " ";
+    position: relative;
+    top: -1px;
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  nav ul.open > li {
+    line-height: 44px;
+  padding: 0px 8px; /* better menu integration */
+  }
+  header .cta.col { width: 25%; }
+
+  .grid-form#splash-signup [data-row-span] [data-field-span] {
+    padding: 8px !important; /* put padding back that we have taketh away. needed because source order */
+  }
+  .signup-submit .cta {
+    margin: 8px 0;
+  }
+
+  .bios .photo { width: 100%; }
+  .bios .photo img { width: 50% !important; margin-left: 25% !important; }
+  .bios .info { width: 100%; }
+
+  .teachers .pitch.col { width: 75%; }
+  .teachers .cta.col { width: 25%; }
+
+  .partners .photo { width: 100%; }
+  .partners .photo img { width: 50% !important; margin-left: 25% !important; }
+  .partners .cta { width: 25%; }
+  .partners .you { width: 75%; }
+  .partners .info { width: 100%; }
+  
+  .button, button, input[type="submit"], input[type="reset"], input[type="button"] { letter-spacing: 0 !important; }
+  .dingus { display: block; }
+  footer { padding-top: 6em !important; }
+  main { margin-bottom: 10em !important; }
+}
+
+/* tablet */
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+  .desktop { display: none; }
+  .smalltablet { display: block; }
+  .tablet { display: block; }
+  .phone { display: none; }
+
+  header .title.col { width: 33.33%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  nav.col { width: 50%; }
+  nav li { font-size: 11px; line-height: 44px; }
+  header .cta.col { width: 16.66%; }
+
+  .video.col { width: 50%; }
+  .why.col { width: 50%; }
+  .signup.col { width: 83.33%; }
+  .signup-submit.col { width: 16.66%; }
+
+  .bios .photo { width: 25%; }
+  .bios .info { width: 75%; }
+
+  .teachers .pitch.col { width: 83.33%; }
+  .teachers .cta.col { width: 16.66%; }
+
+  .partners .photo { width: 25%; }
+  .partners .cta { width: 16.66%; }
+  .partners .you { width: 83.33%; }
+  .partners .info { width: 75%; }
+  
+  .button, button, input[type="submit"], input[type="reset"], input[type="button"] { letter-spacing: 0 !important; }
+  .dingus { display: block; }
+  footer { padding-top: 6em !important; }
+  main { margin-bottom: 10em !important; }
+}
+
+/* big tablet */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .desktop { display: none; }
+  .smalltablet { display: none; }
+  .tablet { display: block; }
+  .phone { display: none; }
+
+  header .title.col { width: 25%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  nav.col { width: 50%; }
+  nav li { font-size: 15px; line-height: 44px; padding: 0px 8px; }
+  header .cta.col { width: 25%; }
+
+  .video.col { width: 50%; }
+  .why.col { width: 50%; }
+  .signup.col { width: 75%; }
+  .signup-submit.col { width: 25%; }
+
+  .bios .photo { width: 25%; }
+  .bios .info { width: 58.33%; }
+
+  .teachers .pitch.col { width: 75%; }
+  .teachers .cta.col { width: 25%; }
+
+  .partners .photo { width: 25%; }
+  .partners .cta { width: 25%; }
+  .partners .you { width: 58.33%; }
+  .partners .info { width: 58.33%; }
+}
+
+/* desktop */
+@media only screen and (min-width: 1025px) {
+  .phone { display: none; }
+  .smalltablet { display: none; }
+  .tablet { display: none; }
+  .desktop { display: block; }
+
+  header .title.col { width: 25%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  nav.col { width: 50%; text-align: center; }
+  nav li { font-size: 15px; line-height: 44px; padding: 0px 8px; }
+  header .cta.col { width: 25%; }
+
+  .video.col { width: 50%; }
+  .why.col { width: 50%; }
+  .signup.col { width: 75%; }
+  .signup-submit.col { width: 25%; }
+
+  .bios .photo { width: 25%; }
+  .bios .info { width: 58.33%; }
+
+  .teachers .pitch.col { width: 75%; }
+  .teachers .cta.col { width: 25%; }
+
+  .partners .photo { width: 25%; }
+  .partners .cta { width: 25%; }
+  .partners .you { width: 58.33%; }
+  .partners .info { width: 58.33%; }
+}
+
+/* tweaks for wide desktop */
+@media only screen and (min-width: 1280px) {
+  .bios .photo.left { position: relative; margin-left: -4.165%; } /* pull to the left a bit */
+  .bios .photo.right { position: relative; margin-right: -4.165%; } /* pull to the right a bit */
+
+  .partners .photo.left { position: relative; margin-left: -4.165%; } /* pull to the left a bit */
+  .partners .photo.right { position: relative; margin-right: -4.165%; } /* pull to the right a bit */
+  .partners .you { width: 54.135%; } /* match text width, but also align cta with right columen */
+}

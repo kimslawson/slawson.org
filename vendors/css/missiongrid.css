@@ -1,0 +1,109 @@
+/* Dead Simple Grid (c) 2015 Vladimir Agafonkin */
+
+.row .row { margin:  0 -8px; }
+.col      { padding: 0  8px; }
+
+.row:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media only screen { .col {
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}}
+
+/* go2science custom grid */
+
+/* phone */
+@media only screen and (max-width: 480px) {
+  .desktop { display: none; }
+  .smalltablet { display: none; }
+  .tablet { display: none; }
+  .phone { display: block; }
+
+  header .title.col { width: 50%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  nav.col { width: 25%; }
+  nav span.phone { text-align: left; }
+  nav > ul.open {
+    height: auto;
+    display: inline-block;
+    padding: 0px 8px;
+  padding: 0; /* better menu integration */
+    position: relative;
+    left: -8px;
+    z-index: 8;
+    border: 1px solid white;
+    background-color: white;
+    box-shadow: -8px 8px 8px -8px rgba(0,0,0,.5), 8px 8px 8px -8px rgba(0,0,0,.5);
+  box-shadow: 0px 0px 8px 0px black; /* better menu integration */
+  }
+  nav > ul.open::before { /* better menu integration */
+    background-color: white;
+    height: 8px;
+    display: block;
+    content: " ";
+    position: relative;
+    top: -1px;
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  nav ul.open > li {
+    line-height: 44px;
+  padding: 0px 8px; /* better menu integration */
+  }
+}
+
+/* tablet - up to ipad portrait */ 
+@media only screen and (min-width: 481px) and (max-width: 1023px) {
+  .desktop { display: none; }
+  .smalltablet { display: block; }
+  .tablet { display: block; }
+  .phone { display: none; }
+
+  header .title.col { width: 25%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  header .pagetitle.col { width: 41.66%; }
+  header .datetime.col { width: 25%; }
+  nav.col { width: 8.33%; }
+  nav li { font-size: 11px; line-height: 44px; }
+}
+
+/* big tablet */
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+  .desktop { display: none; }
+  .smalltablet { display: none; }
+  .tablet { display: block; }
+  .phone { display: none; }
+
+  header .title.col { width: 16.66%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  header .pagetitle.col { width: 50%; }
+  header .datetime.col { width: 25%; }
+  nav.col { width: 8.33%; }
+  nav li { font-size: 15px; line-height: 44px; padding: 0px 8px; }
+
+  .left.col { width: 66.66% }
+  .right.col { width: 33.33%}
+}
+
+/* desktop */
+@media only screen and (min-width: 1280px) {
+  .phone { display: none; }
+  .smalltablet { display: none; }
+  .tablet { display: none; }
+  .desktop { display: block; }
+
+  header .title.col { width: 25%; }
+  #logo { height: 36px; width: auto; margin: 4px 8px 4px 0px; }
+  header h1 { font-size: 15px; line-height: 44px; margin: 0; }
+  nav.col { width: 50%; text-align: center; }
+  nav li { font-size: 15px; line-height: 44px; padding: 0px 8px; }
+}

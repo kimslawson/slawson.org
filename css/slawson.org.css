@@ -1,0 +1,1062 @@
+/* solarized colors as CSS variables, from
+ * https://gist.github.com/x-zvf/a8b84f5e8065e39cab68e725c4dd1255 */
+
+:root {
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
+    --base2: #eee8d5;
+    --base3: #fdf6e3;
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red: #dc322f;
+    --magenta: #d33682;
+    --violet: #6c71c4;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --green: #859900;
+
+    --technologistbg: white;
+}
+:root.dark {
+    /* switch the base colors to solarized dark */
+    --base3: #002b36;
+    --base2: #073642;
+    --base1: #586e75;
+    --base0: #657b83;
+    --base00: #839496;
+    --base01: #93a1a1;
+    --base02: #eee8d5;
+    --base03: #fdf6e3;
+
+    --technologistbg: black;
+}
+
+html::after {
+    opacity: 0;
+    /* turn off baseline grid */
+}
+html.show-baseline::after {
+  opacity: 1 !important;
+  pointer-events: none; /* allow clicks to pass through */
+}
+
+/*
+body {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+*/
+
+* {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+
+/* utility classes */
+
+/* standardized colors */
+.design-color,
+.tags span.design-color,
+.tags span.design-color a {
+    color: var(--blue);
+}
+.development-color,
+.tags span.development-color,
+.tags span.development-color a {
+    color: var(--yellow);
+}
+.technology-color,
+.tags span.technology-color, 
+.tags span.technology-color a {
+    color: var(--green);
+}
+.management-color,
+.tags span.management-color,
+.tags span.management-color a {
+    color: var(--red);
+}
+.standard-color,
+.tags span,
+.tags span a {
+    color: var(--base01);
+}
+
+/* darkmode tweaks */
+.dark #creative .logo {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
+}
+.dark #technologist {
+    filter: brightness(0.75);
+    --base01: white;
+}
+.dark #portfolio img,
+.dark .blog img,
+.dark #games img,
+.dark #resume img {
+    filter: brightness(0.5);
+}
+.dark .dribbble-shots-list li {
+    border: 10px solid black;
+}
+.dark .dribbble-shots-list .item-title,
+.dark .dribbble-shots-list .item-description {
+    background-color: black;
+}
+
+/* hide irrelevant items */
+.initial nav, .initial footer, .initial main,
+.background nav, .background footer, .background main {
+    opacity: 0;
+}
+.activated nav, .activated footer, .activated main {
+    opacity: 1;
+}
+footer.mobile {
+    opacity: 0;
+}
+
+.initial {
+    width: 50%;
+}
+
+.activated {
+    width: 80%;
+    box-shadow: 0 0 2vw rgba(0, 0, 0, 50%);
+    z-index: 1;
+}
+
+/* all this is to fix the scroll to wrong section bug */
+/*
+#creative.pre-activated,
+#technologist.pre-activated {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* or 100vh fallback */
+/*
+  overflow: hidden;
+}
+
+#creative.pre-activated main,
+#technologist.pre-activated main {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  height: 100%;
+}
+
+#creative.pre-activated aside,
+#technologist.pre-activated aside {
+  display: flex;
+}
+
+/* Don’t apply visual styling */
+/*
+.pre-activated .splash,
+.pre-activated footer {
+  display: none !important;
+}
+*/
+
+#creative.pre-activated,
+#technologist.pre-activated {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* or 100vh as fallback */
+  overflow: hidden;
+}
+
+#creative.pre-activated main,
+#technologist.pre-activated main {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  height: 100%;
+}
+
+#creative.pre-activated aside,
+#technologist.pre-activated aside {
+  display: flex;
+}
+
+.pre-activated .splash,
+.pre-activated footer {
+  display: none !important;
+}
+
+/* end of pre-activated fix for scroll wrong */
+
+.background {
+    width: 20%;
+}
+
+.outer-container {
+    overflow: hidden;
+}
+
+#creative,
+#technologist {
+    display: flex;
+    height: 100vh;
+    height: 100dvh;
+    transition: all 500ms ease;
+    transition-property: width, box-shadow;
+}
+#creative.initial:hover,
+#technologist.initial:hover {
+    box-shadow: 0 0 2vw rgba(0, 0, 0, 50%);
+    cursor: pointer;
+    z-index: 1;
+}
+#creative.background:hover,
+#technologist.background:hover {
+    cursor: pointer;
+}
+
+#creative {
+    float: left;
+    position: relative;
+    background-color: var(--base3);
+/*    overflow: hidden; /* fix large x margin to right of everything caused by wide main, also large vertical blank space after */
+/* nevermind. fixed this by adding outer container */
+}
+#technologist {
+    float: right;
+    position: relative;
+    background-color: var(--technologistbg);
+}
+#creative .logo {
+    width: 33%;
+}
+
+#technologist .logo {
+    width: 36.33%; /* KP logo size adjust */
+    margin-top: -1.25vw; /* KP logo size adjust */
+}
+#creative .caption, 
+#technologist .caption {
+    text-align: center;
+    width: 100%;
+    font-size: 5vw;
+    margin-top: 5vw;
+    color: var(--base1);
+}
+#technologist .caption {
+    margin-top: 3.75vw !important; /* KP logo size adjust */
+}
+.background .caption {
+    font-size: 2vw;
+}
+.background .caption {
+    transform: rotate(-90deg);
+    position: absolute;
+    bottom: 15%;
+}
+#creative.background .logo {
+    position: absolute;
+    top: 5vw;
+}
+#technologist.background .logo {
+    position: absolute;
+    top: 3.75vw; /* KP logo size adjust */
+}
+
+#creative.activated .logo {
+    position: relative;
+    width: 66%;
+    margin: 0;
+    left: 50px;
+    top: 50px;
+}
+#technologist.activated .logo {
+    position: relative;
+    width: 72%;
+    margin: 0;
+    left: 40px;
+    top: 45px;
+}
+.activated .caption {
+    display: none;
+}
+
+/* investigating weird disappearance of creative aside on mobile 
+#creative.activated aside {
+  background-color: rgba(255, 0, 0, 0.2) !important;
+  z-index: 9999 !important;
+}
+*/
+
+.activated aside {
+    flex: 0 0 200px;
+}
+.initial aside,
+.background aside {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+/* flex-flow: column nowrap; */
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+aside nav {
+    /* fix click capture when footer overlays nav */
+    z-index: 1; 
+}
+
+main {
+    flex: 1;
+    overflow-x: auto;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0;
+}
+section {
+    scroll-snap-align: start;
+    min-width: 100%;
+max-width: 100%;
+    box-sizing: border-box;
+overflow-y: auto;
+max-height: 100vh;
+max-height: 100dvh;
+    padding: 50px;
+    outline: none;
+}
+.caption {
+    font-family: tungstenmedium;
+}
+h1, h2, h3, h4, h5, .heading, .breadcrumbs {
+    font-family: mercurytext_g2_bold;
+    color: var(--base01);
+    margin: 0 0 .75em 0;
+    line-height: 1.16666666; /* match p l-h */
+}
+h1,
+.breadcrumbs {
+  font-size: 2em;
+  display: inline; /* make sure it wraps correctly */
+}
+h1 {
+/* don't use browser css small caps because the weight
+ * doesn't look right. Use the smallcaps font itself
+ */
+/*  font-variant-caps: small-caps; */
+  font-family: mercurytext_g2_bold_sc;
+}
+.blog h1,
+.blog .breadcrumbs {
+    display: inline-block; /* EXCEPT in the blog because those headings can be hella long and look bad not wrapped */
+    margin-bottom: 0;
+    vertical-align: top;
+}
+h1:has(a) { 
+  /* only match h1 with prev/next links injected */
+  margin-left: -1em;
+}
+h1:hover .nav-prev,
+h1:hover .nav-next {
+  opacity: 1;
+}
+h1 .nav-prev,
+h1 .nav-next {
+  position: relative;
+  font-weight: normal;
+  text-decoration: none;
+  color: var(--base01);
+  opacity: 0;
+}
+h1 .nav-prev {
+  margin-right: 0.5em;
+}
+h1 .nav-next {
+  margin-left: 0.5em;
+}
+h2 {
+  font-size: 1.5em;
+  margin-top: 1lh;
+  margin-bottom: 0;
+}
+h3 {
+  font-size: 20px;
+  line-height: 1.39999999; /* match p l-h */
+  margin-top: 1lh;
+  margin-bottom: 0;
+}
+
+h3.supplemental {
+    /* sidenote: when I was young I thought "supplemental" meant "oh shit" because when Picard said "Captain's log, supplemental" it was always in a moment of panic */
+    font-family: mercurytext_g2_bold_sc;
+    text-transform: lowercase;
+}
+h2.big,
+p.big {
+  font-size: 2em;
+  line-height: 1.3125;
+}
+h2.big {
+  margin-top: 0.325lh;
+}
+p.big + p.big {
+  margin-top: 0.325lh;
+}
+h1 + .big:first-of-type {
+  margin-top: .45lh; /* adjust first big p or h2 to match baseline for the rest of the page to line up correctly */
+}
+
+main ul,
+main ol {
+    padding: 0;
+}
+p, ul, ol, li, blockquote, main .toggle-label {
+    font-family: mercurytext_g2_roman;
+    color: var(--base01);
+    font-size: 20px;
+}
+main h1 + p,
+main p + p,
+main ul + p,
+main ol + p,
+main label + p {
+    margin-top: 1lh;
+}
+main h1 + ul,
+main h1 + ol {
+    margin-top: 1.4em;
+}
+ul:not(.dribbble-shots-list) li h2 {
+    /* keep that sweet baseline */
+    line-height: 0.8; 
+    margin-bottom: 0.1lh;
+}
+ul:not(.dribbble-shots-list) li:has(h2) {
+    list-style-type: square;
+}
+i {
+    font-family: mercurytext_g2_italic;
+    font-style: normal;
+}
+b {
+    font-family: mercurytext_g2_bold;
+    font-style: normal;
+}
+b i,
+i b {
+    font-family: mercurytext_g2_bold_italic;
+    font-style: normal;
+}
+p a, li a, h1 a, h2 a, h3 a, h4 a, h5 a, .heading a, .breadcrumbs a {
+    color: var(--base03);
+}
+p a:visited, li a:visited, h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, .heading a:visited, .breadcrumbs a:visited {
+    color: var(--base0);
+}
+p a:hover, li a:hover, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, .heading a:hover, .breadcrumbs a:hover {
+    text-decoration: none;
+}
+p a:active, li:active, h1 a:active, h2 a:active, h3 a:active, h4 a:active, h5 a:active, .heading a:active, .breadcrumbs a:active {
+    color: var(--magenta);
+}
+blockquote {
+    margin-left: 0;
+    padding-left: .5lh;
+    border-left: 5px solid var(--base0);
+    margin-top: 0.25lh;
+}
+div.tags {
+    font-family: tungstenmedium;
+    font-size: 24px;
+    /* mind the (baseline) gap */
+    margin-top: -0.075lh;
+    margin-bottom: 0.5lh; 
+}
+.tags span {
+    padding: 0.1em 0.75em;
+}
+.tags span.selected {
+    background-color: currentcolor;
+    border-radius: 20px;
+}
+.tags span a {
+    text-decoration: none !important;
+}
+.tags span.selected a {
+    color: var(--base3);
+}
+
+hr.footnote {
+    height: 0;
+    border-top: 1px solid var(--base01);
+    margin: 1.5lh 0 0.5lh 0;
+    width: 50px;
+}
+
+#creative ::selection {
+    background-color: var(--magenta);
+    color: var(--base3);
+}
+#technologist ::selection {
+    background-color: var(--magenta);
+    color: white;
+}
+
+/* drop cap? */
+/* let's not bother. Too finicky and with bad support
+#profile p:first-of-type::first-letter {
+    color: var(--magenta);
+    padding-right: 0.75ch;
+    -webkit-initial-letter: 2;
+    initial-letter: 2;
+    font-family: tungstenmedium;
+}
+*/
+/* I wish this worked. This does not work (in 2025)
+#profile p:first-of-type::first-letter::before {
+    content: '🎨';
+}
+*/
+
+/* links */
+ul.links {
+    list-style: none;
+    padding: 0;
+}
+ul.links li {
+    margin-top: 0.25lh;
+}
+ul.links li::before {
+  content: '';
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-bottom: -3px;
+  padding-right: 0.75ch;
+
+  /* to match base01 color,
+   * from https://codepen.io/sosuke/pen/Pjoqqp,
+   * CSS filter generator to convert from black to target hex color */
+  filter: invert(41%) sepia(10%) saturate(766%) hue-rotate(148deg) brightness(97%) contrast(88%);
+}
+ul.links li.github::before {
+  background-image: url('../img/github-logo.svg');
+}
+ul.links li.dribbble::before {
+  background-image: url('../img/dribbble-logo.svg');
+}
+ul.links li.linkedin::before {
+  background-image: url('../img/linkedin-logo.svg');
+}
+ul.links li.spreadshop::before {
+  background-image: url('../img/spreadshop-logo.svg');
+}
+li.github::marker {
+    height: 1em;
+    width: 1em;
+}
+
+nav {
+    position: absolute;
+    top: 201px; /* line up with initial main baseline */
+    left: 50px;
+}
+nav li {
+    font-size: 16px;
+    line-height: 1.75;
+}
+nav ul {
+    padding: 0;
+}
+nav li {
+    list-style-type: none;
+}
+nav li a {
+    font-family: mercurytext_g2_italic;
+    color: var(--base01);
+/*    letter-spacing: 0.5px;
+ *    was too wide for technologist nav aside */
+}
+nav li a.current {
+    font-family: mercurytext_g2_bold_italic;
+    color: var(--base01);
+}
+nav li a.current:before {
+    content: "☞";
+    position: absolute;
+    margin-top: -1px;
+    margin-left: -1.25em;
+    font-size: 20px;
+}
+/* fix for firefox; manicule not aligned with nav li */
+/* note: could also use
+ * @supports (-moz-appearance:none) {
+ *   selector { property:value; }
+ * }
+ */
+@-moz-document url-prefix() {
+    nav li a.current:before {
+        margin-top: -5px;
+    }
+}
+footer {
+    font-family: mercurytext_g2_roman;
+    color: var(--base01);
+}
+footer p,
+footer span {
+    font-size: 16px !important;
+    line-height: 1.7;
+}
+aside footer {
+    position: absolute;
+    bottom: 51px; /* align to baseline */
+    left: 50px;
+}
+aside footer p {
+    font-size: 16px;
+    line-height: 1.8;
+}
+section footer {
+    margin-top: 1lh;
+    display: none;
+}
+section footer p {
+    margin-top: 0 !important;
+}
+
+/* make the headings balanced */
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main .heading {
+    text-wrap: balance;
+}
+/* match the p width of 50ch */
+main h1 {
+    max-width: 29ch;
+}
+/* but not the portfolio item titles */
+main section.not("#portfolio") h2 {
+    max-width: 29ch;
+}
+
+main p,
+main li,
+main blockquote {
+    /* limit text measure width for readability */
+    max-width: 50ch;
+
+    /* tweak line-breaking algorithm to avoid widows &
+     * orphans
+     * (just supported in 2025. Fingers crossed) */
+    text-wrap: pretty;
+}
+#designeranddeveloper p,
+#technologyandmanagement p {
+    text-wrap: balance;
+}
+
+/* toggle switches
+ * from https://codepen.io/morgoe/pen/VvzWQg */
+.toggle {
+	cursor: pointer;
+	display: inline-block;
+}
+footer .toggle {
+    position: relative;
+    top: 3px; /* align with baseline */
+}
+.toggle-switch {
+	display: inline-block;
+	background: var(--base2);
+	border-radius: 16px;
+	width: 58px;
+	height: 32px;
+	position: relative;
+    top: -2px; /* align switch with baseline */
+	vertical-align: middle;
+	transition: background 0.25s;
+	&:before,
+	&:after {
+		content: "";
+	}
+	&:before {
+		display: block;
+		background: linear-gradient(to bottom, #fff 0%,#eee 100%);
+		border-radius: 50%;
+		box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
+		width: 24px;
+		height: 24px;
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		transition: left 0.25s;
+	}
+	.toggle:hover &:before {
+		background: linear-gradient(to bottom, #fff 0%,#fff 100%);
+		box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+	}
+	.toggle-checkbox:checked + & {
+		background: var(--green);
+		&:before {
+			left: 30px;
+		}
+	}
+}
+.toggle-checkbox {
+	position: absolute;
+	visibility: hidden;
+}
+.toggle-label {
+	margin-left: 5px;
+	position: relative;
+/*	top: 2px; /* align label with baseline */
+}
+.toggle > .toggle-label {
+    margin-right: 5px;
+    margin-left: 0;
+    /* added label before toggle */
+}
+
+/* blinking cursor (on profile section) */
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+    animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+/* Portfolio section */
+.dribbble-shots-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1.75em;
+}
+.dribbble-shots-list li {
+    margin: 0 20px 20px 0;
+    border: 10px solid white;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 50%);
+    transition: all 250ms ease-in-out;
+    transition-property: transform, box-shadow;
+}
+.dribbble-shots-list .item-content {
+    position: relative;
+    overflow: visible;
+    width: 400px;
+}
+.dribbble-shots-list .item-box {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 50%);
+}
+.dribbble-shots-list .item-title,
+.dribbble-shots-list .item-description {
+    position: absolute;
+    font-size: 1em;
+    width: 400px;
+    padding: 10px;
+    box-sizing: border-box;
+/*    background-color: rgba(255,255,255,0.9); */
+    background-color: white;
+    opacity: 0;
+    transition: all 0 linear;
+    transition-property: opacity;
+}
+.dribbble-shots-list .item-description p {
+    font-size: 16px;
+}
+.dribbble-shots-list .item-title:empty,
+.dribbble-shots-list .item-description:empty {
+    display: none;
+}
+.dribbble-shots-list .item-title {
+    bottom: 100%;
+    transform: translateY(-0.5rem);
+    letter-spacing: -0.5px;
+    font-family: mercurytext_g2_bold;
+}
+.dribbble-shots-list .item-description {
+    top: 100%;
+    transform: translateY(0.5rem);
+    overflow-wrap: break-word;
+    font-family: mercurytext_g2_roman;
+}
+.dribbble-shotslist a img {
+    width: 400px;
+    background-color: white;
+}
+.dribbble-shots-list li:hover .item-title,
+.dribbble-shots-list li:hover .item-description {
+    transform: scale(1.05);
+    opacity: 1;
+}
+.dribbble-shots-list li:hover {
+    transform: scale(1.05);
+/*    box-shadow: 0 0 10px rgba(0, 0, 0, 50%); */
+    filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+    z-index: 2;
+}
+
+/* blog */
+div.tagged .supplemental,
+div.tagged .tags {
+    display: inline-block;
+}
+div.tagged .supplemental {
+    margin-right: -0.5ch; /* line up with h1 */
+}
+div.tagged .tags span {
+    padding-right: 0; /* tighten the tags a bit */
+}
+
+/* games */
+.speechbubble {
+    /* make it look like the ozymandias.lol speech bubble is coming out of the top of the first paragraph */
+    width: 50%;
+    margin-left: 50%;
+    margin-top: -76px; /* an ugly, hard-coded hack! */
+}
+/* resume */
+#resume h1 {
+    /* align the heading with the resume image */
+    margin-left: -1.5em;
+}
+img.resume {
+    /* make it overlay the whole section,
+     * except the heading... we need that for ux */
+    width: calc(50px + 100% + 50px);
+    margin: 0px -50px -50px -50px;
+}
+
+/* service areas */
+ul.serviceareas {
+    /* allow for 2 columns if page is wide enough */
+    column-width: 230px;
+    max-width: 72ch; /* different than p, etc */
+}
+
+/* kernel panic contact */
+.remove-jotform-branding {
+    width: 102%;
+    height: 56px;
+    background-color: white;
+    margin-top: -56px;
+    position: relative;
+    margin-left: -1%;
+}
+
+/* todo:
+ *
+ * print css
+ * comment and refactor code
+ *
+ * blog about: 
+ * flashback
+ * tease lunchagogo
+ *
+ * auto baseline - nah not going to worry about it for this site... instead I just rolled my own because wtf not ¯\_(ツ)_/¯
+ * baseline: 3 ways in 2025
+ * https://maketypework.com/web-typography-baseline-grids-made-easy/
+ * https://codepen.io/simoncoudeville/pen/vYPYWWm
+ * https://hnldesign.hashnode.dev/setting-a-flexible-baseline-grid-in-css
+ */
+
+
+/* mobile styles */
+@media (max-width: 768px) {
+  #creative,
+  #technologist {
+    display: block;
+    width: 100% !important;
+    float: none;
+    transition-property: height, box-shadow;
+  }
+
+  #creative.initial,
+  #technologist.initial {
+    height: 50vh;
+    height: 50dvh;
+    position: absolute;
+    transition: all 250ms ease-in-out;
+  }
+  #creative.initial:hover,
+  #technologist.initial:hover {
+    transform: scale(1.05);
+  }
+  #creative.initial {
+    top: 0;
+  }
+  #technologist.initial {
+    bottom: 0;
+  }
+
+  /* show background navigation for context on mobile */
+  .initial nav, .initial footer, .initial main,
+  .background footer, .background main {
+      opacity: 0;
+  }
+  .activated nav, .activated footer, .activated main,
+  .background nav {
+      opacity: 1;
+  }
+  /* but don't make it clickable */
+  .background nav {
+    pointer-events: none;
+  }
+  /* show the footer at the bottom of the first section in both #creative and #technologist */
+  footer.mobile {
+    opacity: 1;
+  }
+
+  #creative.activated,
+  #technologist.activated {
+    height: calc(100vh - 84px);
+    height: calc(100dvh - 84px);
+/*    overflow: hidden; */
+  }
+
+  #creative.background,
+  #technologist.background {
+    height: 84px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #creative.activated .logo,
+  #creative.background .logo {
+    top: 20px !important;
+    left: 20px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  #technologist.activated .logo,
+  #technologist.background .logo {
+    top: 20px !important;
+    left: 17.5px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  #technologist.activated .logo {
+    top: 15px !important;
+  }
+  #creative.initial .caption,
+  #technologist.initial .caption {
+    font-size: 44px;
+  }
+  #creative.initial .logo {
+    margin-top: 10vh !important;
+    margin-top: 10dvh !important;
+  }
+  #technologist.initial .caption {
+    order: 1;
+    margin-top: 5vw !important;
+    margin-bottom: 2vw !important;
+  }
+  #creative.initial .caption {
+    margin-top: 2vw !important;
+  }
+  #technologist.initial .logo {
+    order: 2;
+    margin-bottom: 10vh !important;
+    margin-bottom: 10dvh !important;
+  }
+  .background .caption,
+  .activated .caption {
+    position: absolute !important;
+    top: 20px !important;
+/*    left: 50%; */
+    transform: none !important;
+    font-size: 44px !important;
+    line-height: 44px !important;
+    margin: 0 !important;
+    display: block;
+  }
+  #technologist .caption {
+    margin-top: 0 !important;
+  }
+  #technologist .logo {
+    top: 15px !important;
+  }
+  section {
+    padding: 0 20px 20px 20px;
+  }
+  section footer {
+    display: block;
+  }
+  main {
+    height: calc(100% - 84px);
+  }
+  footer {
+    display: none;
+  }
+  .initial aside {
+    height: 100%;
+  }
+  .activated aside {
+    height: 84px;
+  }
+  aside nav {
+    top: 20px;
+    right: 5px;
+    left: unset;
+    transform-origin: top right;
+    transform: scale(0.375);
+    /* make sure it's wide enough to contain the
+     * bold increase in width on .current li */
+    width: 175px !important;
+  }
+  nav li {
+    line-height: 0.8;
+    transform: scale(0.75);
+  }
+  .speechbubble {
+    margin-top: 0;
+  }
+  .nav-prev, .nav-next {
+    /* never show heading nav on mobile */
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  h1, .breadcrumbs {
+    line-height: 0.9;
+  }
+  main h1 + p, main p + p, main ul + p, main ol + p {
+    margin-top: 0.75lh;
+  }
+  img.resume {
+    width: calc(20px + 100% + 20px);
+    margin: 0px -20px -20px -20px;
+  }
+  #resume h1 {
+    margin-left: 0;
+  }
+  main ul, main ol {
+    padding-inline-start: 1em;
+    /* as opposed to setting 
+     * list-style-position: inside;
+     */
+  }
+  .dribbble-shots-list li {
+    margin: 0px 0px 20px 0px;
+    border: 8px solid white;
+  }
+  .dribbble-shots-list .item-content,
+  .dribbble-shots-list .item-title,
+  .dribbble-shots-list a img,
+  .dribbble-shots-list .item-description {
+    width: 100%;
+  }
+  
+}

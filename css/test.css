@@ -1,0 +1,17 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 4fr 4fr;
+    grid-template-areas: "date position position"
+}
+
+.date {
+    grid-area: date;
+}
+
+.experience {
+    /* new table row */
+}
+
+.position {
+    grid-area: position;
+}

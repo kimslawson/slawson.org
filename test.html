@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>testing</title>
+  <script src="js/choreograph.js"></script>
+</head>
+<body>
+    <h1>testing</h1>
+    <div id="creative">
+        <img id="logo" src="img/kim-slawson-logo.svg" width="200" height="200" onClick="clicked()" onTouchStart="touched()" onPointerDown="touched()">
+    </div>
+<script>
+function clicked() {
+  console.log("click");
+  document.getElementById("logo").style.border = "10px solid red";
+}
+function touched() {
+  console.log("touch");
+  document.getElementById("logo").style.border = "10px solid blue";
+}
+document.addEventListener("DOMContentLoaded", () => {
+  choreograph.tap('#creative #logo', { after: 2000, simulate: true, opacity: 1, color: "#FF00FF" });
+  choreograph.drag('#creative #logo', {
+    to: { x: -100, y: -100 },
+    after: 5000, 
+    simulate: true,
+    duration: 5000,
+    opacity: 1,
+    color: "#FF00FF"
+  });
+});
+</script>
+</body>
+</html>
+
