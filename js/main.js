@@ -633,8 +633,8 @@ function setupMobileNavCycler(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const nav = container.querySelector("nav");
-  const main = container.querySelector("main");
+  const nav      = container.querySelector("nav");
+  const main     = container.querySelector("main");
   const sections = container.querySelectorAll("section[id]");
   const sectionIds = Array.from(sections).map(s => s.id);
 
@@ -642,7 +642,7 @@ function setupMobileNavCycler(containerId) {
 
   let currentIndex = 0;
 
-  // Update current index based on which section is visible
+  // Update currentIndex as the user scrolls manually
   main.addEventListener("scroll", () => {
     const current = getCurrentVisibleSection(main, sections);
     if (current) {
@@ -651,16 +651,21 @@ function setupMobileNavCycler(containerId) {
   });
 
   nav.addEventListener("click", (e) => {
-    if (window.innerWidth > 768) return; // Only apply on mobile
-
+    if (window.innerWidth > 768) return; // desktop: no cycler
     e.preventDefault();
+
+    // advance to the next section
     currentIndex = (currentIndex + 1) % sectionIds.length;
     const nextSection = container.querySelector(`#${sectionIds[currentIndex]}`);
+
+    // scroll it into view in <main>
     main.scrollTo({
       left:     nextSection.offsetLeft,
       behavior: "smooth"
     });
-    // block: "nearest" works better than "start" because it keeps the aside around. Yay!
+
+    // update URL hash without jumping the page
+    history.replaceState(null, "", `#${sectionIds[currentIndex]}`);
   });
 }
 
