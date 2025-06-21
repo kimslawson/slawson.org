@@ -488,6 +488,11 @@ div.tags {
 .tags span.selected a {
     color: var(--base3);
 }
+.blog .tags span {
+    /* on each blog entry we don't need room for the selection, 
+     * so tighten up the tag list */
+    padding-right: 0;
+}
 
 hr.footnote {
     height: 0;
