@@ -338,12 +338,20 @@ function matchHash() {
 
   // Focus and scroll to the target section
   setTimeout(() => {
+    // 1) keep focus for a11y without scrolling the window
     target.focus({ preventScroll: true });
+
+    // 2) scroll horizontally *inside* <main>
     const main = target.closest("main");
-    main.scrollTo({
-      left:     target.offsetLeft,
-      behavior: "instant"
-    });
+    if (main) {
+      main.scrollTo({
+        left:     target.offsetLeft,
+        behavior: "instant"
+      });
+    }
+
+    // 3) reset the page’s vertical scroll so your <aside> remains in view
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, 500);
 }
 
@@ -659,7 +667,7 @@ function setupMobileNavCycler(containerId) {
 document.addEventListener("DOMContentLoaded", () => {
   setupMobileNavCycler("creative");
   setupMobileNavCycler("technologist");
-  choreograph.tap('#creative', { after: 1000, color: 'var(--magenta)', opacity: 1, simulate: true });
+//  choreograph.tap('#creative', { after: 1000, color: 'var(--magenta)', opacity: 1, simulate: true });
 });
 
 window.addEventListener("load", () => {
