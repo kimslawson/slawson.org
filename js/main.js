@@ -1,7 +1,25 @@
 /* TODO:
  * debounce keyboard nav
- * mobile fixes
  */
+
+// ——————————————————————————————————————————————
+// Keep track of last visible section per container
+// ——————————————————————————————————————————————
+const lastSectionByContainer = {};  // { creative: "portfolio", technologist: "softwarehardware", … }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("#creative, #technologist").forEach(container => {
+    const main     = container.querySelector("main");
+    const sections = main.querySelectorAll("section[id]");
+    if (!main || !sections.length) return;
+
+    // on every scroll, snap-read the current section
+    main.addEventListener("scroll", () => {
+      const curr = getCurrentVisibleSection(main, sections);
+      if (curr) lastSectionByContainer[container.id] = curr.id;
+    });
+  });
+});
 
 // -------------------------------
 // Helper: Get currently visible section
@@ -31,172 +49,69 @@ function linkify(text) {
   });
 }
 
-/* dumb bc resets state when background containers are clicked. boo.
-// -------------------------------
-// Splash click handler
-// -------------------------------
-document.querySelectorAll('.initial').forEach(element => {
-  element.addEventListener('click', function () {
-    const allElements = document.querySelectorAll('.initial, .activated, .background');
-    allElements.forEach(el => {
-      if (el === this) {
-        el.classList.remove('initial', 'background');
-        el.classList.add('activated');
-      } else {
-        el.classList.remove('initial', 'activated');
-        el.classList.add('background');
-      }
-    });
-  });
-});
-*/
-// -------------------------------
-// Splash click handler (remembers scroll position per container)
-// -------------------------------
-/*
-const lastSectionByContainer = new Map();
+// ---------------------------------------------
+// Splash click handler - waits for width-transition before scrolling
+// ---------------------------------------------
+document.querySelectorAll("#creative, #technologist").forEach(container => {
+  container.addEventListener("click", () => {
+    // a) if it’s already active, do nothing
+    if (container.classList.contains("activated")) return;
 
-document.querySelectorAll('#creative, #technologist').forEach(container => {
-  const main = container.querySelector('main');
-  const sections = main?.querySelectorAll('section[id]');
+    // b) pick the section to restore (or default to the very first)
+    const firstId   = container.querySelector("section[id]").id;
+    const restoreId = lastSectionByContainer[container.id] || firstId;
+    const target    = container.querySelector(`#${restoreId}`);
 
-  if (!main || !sections) return;
-
-  container.addEventListener('click', () => {
-console.group(`🌀 Container Click: ${container.id}`);
-console.log('Active container before click:', document.querySelector('.activated')?.id || 'none');
-    const isAlreadyActive = container.classList.contains('activated');
-    if (isAlreadyActive) return; // do nothing if already active
-
-    // Save the currently visible section of the currently active container
-    const currentActive = document.querySelector('.activated');
-    if (currentActive) {
-      const currentMain = currentActive.querySelector('main');
-      const currentSection = getCurrentVisibleSection(currentMain, currentMain.querySelectorAll('section[id]'));
-      if (currentSection) {
-console.log(`📦 Saving current section for ${currentActive.id}:`, currentSection.id);
-        lastSectionByContainer.set(currentActive.id, currentSection.id);
-      }
-    }
-
-    // Activate this container, background the other
-    const allContainers = document.querySelectorAll('#creative, #technologist');
-    allContainers.forEach(el => {
-      if (el === container) {
-        el.classList.remove('initial', 'background');
-        el.classList.add('activated');
-      } else {
-        el.classList.remove('initial', 'activated');
-        el.classList.add('background');
-      }
+    // c) flip classes NOW so CSS begins the width transition
+    document.querySelectorAll("#creative, #technologist").forEach(el => {
+      el.classList.toggle("activated",  el === container);
+      el.classList.toggle("background", el !== container);
+      el.classList.remove("initial", "pre-activated");
     });
 
-    // Restore previous section if known
-    const previousSectionId = lastSectionByContainer.get(container.id);
-console.log(`🔁 Attempting to restore section for ${container.id}:`, previousSectionId);
-    if (previousSectionId) {
-      const targetSection = container.querySelector(`section#${previousSectionId}`);
-if (targetSection) {
-  console.log(`📍 Scrolling to section: #${previousSectionId}`);
-} else {
-  console.warn(`⚠️ Section #${previousSectionId} not found in ${container.id}`);
-}
-      if (targetSection) {
+    // d) once that width animation finishes, do our scroll + hash
+    function onTransitionEnd(e) {
+      // only fire on our container’s width transition
+      if (e.target === container && e.propertyName === "width") {
+        container.removeEventListener("transitionend", onTransitionEnd);
+        clearTimeout(fallback);
 
-//        requestAnimationFrame(() => {
-//          targetSection.scrollIntoView({
-//            behavior: 'instant',
-//            block: 'nearest',
-//            inline: 'start'
-//          });
-//console.log(`✅ scrollIntoView complete for #${previousSectionId}`);
-//console.groupEnd();
-//
-//targetSection.style.outline = '2px solid limegreen';
-//setTimeout(() => {
-//  targetSection.style.outline = '';
-//}, 1000);
-//        });
-
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            targetSection.scrollIntoView({
-              behavior: 'instant',
-              block: 'nearest',
-              inline: 'start'
+        if (target) {
+          const main = container.querySelector('main');
+          if (target && main) {
+            main.scrollTo({
+              left:     target.offsetLeft,
+              behavior: 'instant'
             });
-            console.log(`✅ Final scrollIntoView for #${previousSectionId}`);
-          }, ); // allow layout + snap settle
-        });
-      }
-    }
-  });
-});
-*/
-// ---------------------------------------------
-// Splash click handler (snapproof + scroll-restore + hash-stable)
-// ---------------------------------------------
-
-const lastSectionByContainer = new Map();
-
-document.querySelectorAll('#creative, #technologist').forEach(container => {
-  const main = container.querySelector('main');
-  const sections = main?.querySelectorAll('section[id]');
-  if (!main || !sections) return;
-
-  container.addEventListener('click', () => {
-    const isAlreadyActive = container.classList.contains('activated');
-    if (isAlreadyActive) return;
-
-    // 🧠 Save current section of the active container
-    const currentActive = document.querySelector('.activated');
-    if (currentActive) {
-      const currentMain = currentActive.querySelector('main');
-      const currentSection = getCurrentVisibleSection(
-        currentMain,
-        currentMain.querySelectorAll('section[id]')
-      );
-      if (currentSection) {
-        lastSectionByContainer.set(currentActive.id, currentSection.id);
+          }
+        }
+        history.replaceState(null, "", `#${restoreId}`);
       }
     }
 
-    // 🧠 Get section to restore
-    const previousSectionId = lastSectionByContainer.get(container.id);
-    const targetSection = previousSectionId
-      ? container.querySelector(`section#${previousSectionId}`)
-      : null;
+    container.addEventListener("transitionend", onTransitionEnd);
 
-    // 🫥 Temporarily activate layout (but not visual state)
-    container.classList.add('pre-activated');
-
-    // 🔍 Scroll to correct section BEFORE snap/paint
-    if (targetSection) {
-      targetSection.scrollIntoView({
-        behavior: 'instant',
-        block: 'nearest',
-        inline: 'start'
-      });
-    }
-
-    // 🛡️ Prevent scrollIntoView from updating the URL
-    history.replaceState(null, '', ' '); // wipe hash to avoid accidental browser override
-
-    // 🎯 Commit container class changes
-    document.querySelectorAll('#creative, #technologist').forEach(el => {
-      if (el === container) {
-        el.classList.remove('initial', 'background', 'pre-activated');
-        el.classList.add('activated');
-      } else {
-        el.classList.remove('initial', 'activated', 'pre-activated');
-        el.classList.add('background');
+    // e) fallback in case transitionend doesn’t fire
+    const fallback = setTimeout(() => {
+      container.removeEventListener("transitionend", onTransitionEnd);
+      if (target) {
+        const main = container.querySelector('main');
+        if (target && main) {
+          main.scrollTo({
+            left:     target.offsetLeft,
+            behavior: 'instant'
+          });
+        }
       }
-    });
+      history.replaceState(null, "", `#${restoreId}`);
+    }, 500); // match CSS 250ms + cushion
 
-    // ✅ Optional: restore hash after scroll if you want
-    if (previousSectionId) {
-      history.replaceState(null, '', `#${previousSectionId}`);
-    }
+    /* (Optional) Pin the window vertical scroll 
+     * If you want absolute insurance that nothing ever moves the page vertically, 
+     * after you’ve swapped classes you can re-pin the window at the very top
+     */
+    // after you scroll <main> and swap .activated/.background…
+    //window.scrollTo({ top: 0, behavior: 'instant' });
   });
 });
 
@@ -283,40 +198,6 @@ function updateDateHeadingVisibility() {
   });
 }
 
-// -------------------------------
-// Anchor-based initial state
-// -------------------------------
-/*
-function matchHash() {
-console.log("matching hash");
-  const hash = window.location.hash;
-  if (!hash) return;
-
-  const creative = document.getElementById('creative');
-  const technologist = document.getElementById('technologist');
-
-  const creativeSections = creative.querySelectorAll('section[id]');
-  const technologistSections = technologist.querySelectorAll('section[id]');
-
-  const matchInContainer = (sections) =>
-    Array.from(sections).some(section => `#${section.id}` === hash);
-
-  const isCreative = matchInContainer(creativeSections);
-  const isTechnologist = matchInContainer(technologistSections);
-
-  if (isCreative) {
-    creative.classList.remove('initial');
-    technologist.classList.remove('initial');
-    creative.classList.add('activated');
-    technologist.classList.add('background');
-  } else if (isTechnologist) {
-    creative.classList.remove('initial');
-    technologist.classList.remove('initial');
-    technologist.classList.add('activated');
-    creative.classList.add('background');
-  }
-}
-*/
 function matchHash() {
   const hash = window.location.hash.substring(1); // remove '#'
   if (!hash) return;
@@ -486,57 +367,6 @@ document.addEventListener("DOMContentLoaded", () => {
   enhanceSectionNavigation("technologist");
 });
 
-/*
-// -------------------------------
-// On resize, scroll current section back into view
-// -------------------------------
-window.addEventListener("resize", () => {
-  const activeContainer = document.querySelector(".activated");
-  if (!activeContainer) return;
-
-  const main = activeContainer.querySelector("main");
-  if (!main) return;
-
-  const currentSection = getCurrentVisibleSection(main, main.querySelectorAll("section[id]"));
-  if (!currentSection) return;
-
-//  currentSection.scrollIntoView({ behavior: "instant" });
-  currentSection.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",  // Stable, safe
-    inline: "start"    // Optional for horizontal scroll snap
-  });
-});
-*/
-/*
-// -------------------------------
-// On resize, scroll current section back into view (debounced)
-// -------------------------------
-let resizeTimeout;
-
-window.addEventListener("resize", () => {
-  clearTimeout(resizeTimeout);
-
-  resizeTimeout = setTimeout(() => {
-    const activeContainer = document.querySelector(".activated");
-    if (!activeContainer) return;
-
-    const main = activeContainer.querySelector("main");
-    if (!main) return;
-
-    const currentSection = getCurrentVisibleSection(
-      main,
-      main.querySelectorAll("section[id]")
-    );
-    if (!currentSection) return;
-
-    currentSection.scrollIntoView({
-        behavior: "instant",
-        block: "nearest"
-    });
-  }, 150); // Adjust delay if needed
-});
-*/
 // ---------------------------------------------
 // Preserve current section after resize
 // ---------------------------------------------
@@ -571,20 +401,6 @@ function scrollToCurrentSectionAfterResize() {
   });
 }
 
-/*
-// -------------------------------
-// On clicking the baseline toggle, toggle the class on html
-// -------------------------------
-document.addEventListener("DOMContentLoaded", function () {
-  const baselineToggle = document.querySelector('.baseline');
-
-  if (baselineToggle) {
-    baselineToggle.addEventListener('change', function () {
-      document.documentElement.classList.toggle('show-baseline', baselineToggle.checked);
-    });
-  }
-});
-*/
 // -------------------------------
 // On clicking any baseline toggle, toggle the class on html
 // -------------------------------
