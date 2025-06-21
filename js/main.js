@@ -551,19 +551,15 @@ window.addEventListener("resize", () => {
 });
 
 function scrollToCurrentSectionAfterResize() {
-  const activeContainer = document.querySelector(".activated");
-  if (!activeContainer) return;
-
-  const main = activeContainer.querySelector("main");
+  const active = document.querySelector(".activated");
+  if (!active) return;
+  const main = active.querySelector("main");
   if (!main) return;
-
-  const currentSection = getCurrentVisibleSection(main, main.querySelectorAll("section[id]"));
-  if (!currentSection) return;
-
-  currentSection.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-    inline: "start"
+  const section = getCurrentVisibleSection(main, main.querySelectorAll("section[id]"));
+  if (!section) return;
+  main.scrollTo({
+    left:     section.offsetLeft,
+    behavior: "smooth"
   });
 }
 
