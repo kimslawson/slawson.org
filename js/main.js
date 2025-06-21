@@ -648,11 +648,9 @@ function setupMobileNavCycler(containerId) {
     e.preventDefault();
     currentIndex = (currentIndex + 1) % sectionIds.length;
     const nextSection = container.querySelector(`#${sectionIds[currentIndex]}`);
-//    nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    nextSection.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",  // Stable, safe
-      inline: "start"    // Optional for horizontal scroll snap
+    main.scrollTo({
+      left:     nextSection.offsetLeft,
+      behavior: "smooth"
     });
     // block: "nearest" works better than "start" because it keeps the aside around. Yay!
   });
