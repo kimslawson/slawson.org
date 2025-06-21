@@ -339,12 +339,12 @@ function matchHash() {
   // Focus and scroll to the target section
   setTimeout(() => {
     target.focus({ preventScroll: true });
-//    target.scrollIntoView({ behavior: "smooth" });
-    target.scrollIntoView({
-        behavior: "instant",
-        block: "nearest"
+    const main = target.closest("main");
+    main.scrollTo({
+      left:     target.offsetLeft,
+      behavior: "instant"
     });
-  }, 500); // small delay to ensure transition completes
+  }, 500);
 }
 
 // add the function above to both content load and hash change
