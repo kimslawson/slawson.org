@@ -319,6 +319,7 @@ main {
 }
 section {
     scroll-snap-align: start;
+scroll-snap-stop: always; /* NEW: don’t coast past the target */
     min-width: 100%;
 max-width: 100%;
     box-sizing: border-box;
@@ -491,7 +492,7 @@ div.tags {
 .blog .tags span {
     /* on each blog entry we don't need room for the selection, 
      * so tighten up the tag list */
-    padding-right: 0;
+    padding-right: 0 !important;
 }
 
 hr.footnote {
