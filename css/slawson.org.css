@@ -59,6 +59,11 @@ body {
 
 /* utility classes */
 
+/* used for blog tags */
+.hidden {
+    display: none;
+}
+
 /* standardized colors */
 .design-color,
 .tags span.design-color,
