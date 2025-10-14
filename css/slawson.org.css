@@ -722,7 +722,7 @@ footer .toggle {
 		box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
 	}
 	.toggle-checkbox:checked + & {
-		background: var(--green);
+		background: var(--green) !important;
 		&:before {
 			left: 30px;
 		}
@@ -741,6 +741,10 @@ footer .toggle {
     margin-right: 5px;
     margin-left: 0;
     /* added label before toggle */
+}
+#technologist .toggle-switch {
+	background: #dddddd;
+    /* light grey to match tech accents */
 }
 
 /* blinking cursor (on profile section) */
