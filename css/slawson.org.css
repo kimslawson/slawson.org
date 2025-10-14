@@ -105,6 +105,9 @@ body {
 .dark #resume img {
     filter: brightness(0.5);
 }
+.dark .logo {
+    filter: brightness(0.75);
+}
 .dark .dribbble-shots-list li {
     border: 10px solid black;
 }
