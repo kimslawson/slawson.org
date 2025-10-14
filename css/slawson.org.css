@@ -444,7 +444,7 @@ main h1 + ol {
 ul:not(.dribbble-shots-list) li h2 {
     /* keep that sweet baseline */
     line-height: 0.8; 
-    margin-bottom: 0.1lh;
+    margin-bottom: 0.125lh;
 }
 ul:not(.dribbble-shots-list) li:has(h2) {
     list-style-type: square;
