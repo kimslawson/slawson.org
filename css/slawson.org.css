@@ -899,7 +899,7 @@ ul.serviceareas {
   #technologist.initial {
     height: 50vh;
     height: 50dvh;
-    position: absolute;
+ /*   position: absolute; /* messes up with html/body/container dvh. not needed anyway */
     transition: all 250ms ease-in-out;
   }
   #creative.initial:hover,
