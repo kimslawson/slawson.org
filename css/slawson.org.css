@@ -277,7 +277,9 @@ footer.mobile {
 }
 #technologist.background .logo {
     position: absolute;
-    top: 3.75vw; /* KP logo size adjust */
+    top: 5vw; /* KP logo size adjust */
+    width: 50%; /* KP logo size adjust */
+    margin-top: auto; /* KP logo size adjust */
 }
 
 #creative.activated .logo {
