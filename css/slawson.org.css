@@ -236,11 +236,17 @@ footer.mobile {
     background-color: var(--technologistbg);
 }
 #creative .logo {
+    /* specify both width and height for horizontal and vertical layouts */
+    /* otherwise logo is too big and overflows vertical container */
     width: 33%;
+    height: 33%;
 }
 
 #technologist .logo {
+    /* specify both width and height for horizontal and vertical layouts */
+    /* otherwise logo is too big and overflows vertical container */
     width: 36.33%; /* KP logo size adjust */
+    height: 36.33%; /* KP logo size adjust */
     margin-top: -1.25vw; /* KP logo size adjust */
 }
 #creative .caption, 
