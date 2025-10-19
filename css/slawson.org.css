@@ -38,7 +38,7 @@
 html {
     /* to fix the dumb dynamic island/addressbar overlap at top & bottom */
     /* see https://www.reddit.com/r/webdev/comments/1no6j9u/ios_26_and_the_viewport_chrome/ */
-    width: 100dvh;
+    width: 100dvw;
     height: 100dvh;
 }
 
