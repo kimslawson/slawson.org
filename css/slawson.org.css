@@ -35,6 +35,12 @@
     --technologistbg: black;
 }
 
+html {
+    /* to fix the dumb dynamic island/addressbar overlap at top & bottom */
+    width: 100dvh;
+    height: 100dvh;
+}
+
 html::after {
     opacity: 0;
     /* turn off baseline grid */
