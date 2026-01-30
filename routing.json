@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "match": "*",
+      "headers": [
+        {
+          "name": "Document-Policy",
+          "value": "force-load-at-top"
+        }
+      ]
+    }
+  ]
+}
