@@ -360,6 +360,8 @@ max-height: 100dvh;
 }
 h1, h2, h3, h4, h5, .heading, .breadcrumbs {
     font-family: mercurytext_g2_bold;
+	/* don't use synthetic bold since we have a proper boldface */
+	font-weight: normal;
     color: var(--base01);
     margin: 0 0 .75em 0;
     line-height: 1.16666666; /* match p l-h */
@@ -466,16 +468,20 @@ ul:not(.dribbble-shots-list) li:has(h2) {
 }
 i {
     font-family: mercurytext_g2_italic;
+	/* don't use synthetic/oblique italic since we have a proper italic face */
     font-style: normal;
 }
 b {
     font-family: mercurytext_g2_bold;
-    font-style: normal;
+	/* don't use synthetic bold since we have a proper boldface */
+	font-weight: normal;
 }
 b i,
 i b {
     font-family: mercurytext_g2_bold_italic;
+	/* don't use synthetic bold or italic since we have a proper BI face */
     font-style: normal;
+	font-weight: normal;
 }
 p a, li a, h1 a, h2 a, h3 a, h4 a, h5 a, .heading a, .breadcrumbs a {
     color: var(--base03);
