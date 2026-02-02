@@ -876,10 +876,13 @@ div.tagged .tags span {
     margin-left: -1.5em;
 }
 img.resume {
-    /* make it overlay the whole section,
-     * except the heading... we need that for ux */
-    width: calc(50px + 100% + 50px);
-    margin: 0px -50px -50px -50px;
+    /* make it overlay the whole section -50px,
+     * except the heading... we need that for ux 
+     * and put a shadow around it to make it look
+	 * like it's on a sheet of paper */
+    width: calc(50px + 100% + 50px - 50px);
+    margin: 25px -25px -25px -25px;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 50%);
 }
 
 /* service areas */
