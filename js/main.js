@@ -19,9 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         const curr = getCurrentVisibleSection(main, sections);
-        if (curr) lastSectionByContainer[container.id] = curr.id;
-      }, 100); // wait for scroll to settle
+        if (curr) {
+          lastSectionByContainer[container.id] = curr.id;
+          console.log(`[${container.id}] scroll settled on:`, curr.id);
+        }
+      }, 150); // wait for scroll to settle
     });
+    
+    // Initialize with the first section
+    const firstSection = sections[0];
+    if (firstSection) {
+      lastSectionByContainer[container.id] = firstSection.id;
+    }
   });
 });
 
@@ -30,13 +39,24 @@ document.addEventListener("DOMContentLoaded", () => {
 // -------------------------------
 function getCurrentVisibleSection(main, sections) {
   const mainRect = main.getBoundingClientRect();
+  const mainCenter = mainRect.left + mainRect.width / 2;
+  
+  let closestSection = null;
+  let closestDistance = Infinity;
+  
   for (const section of sections) {
     const rect = section.getBoundingClientRect();
-    if (rect.left >= mainRect.left && rect.left < mainRect.right) {
-      return section;
+    const sectionCenter = rect.left + rect.width / 2;
+    const distance = Math.abs(sectionCenter - mainCenter);
+    
+    // Find the section whose center is closest to the main container's center
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestSection = section;
     }
   }
-  return null;
+  
+  return closestSection;
 }
 
 // -------------------------------
@@ -61,20 +81,25 @@ document.querySelectorAll("#creative, #technologist").forEach(container => {
     // a) if it's already active, do nothing
     if (container.classList.contains("activated")) return;
 
-    // b) IMPORTANT: Capture the currently visible section in BOTH containers before switching
-    document.querySelectorAll("#creative, #technologist").forEach(c => {
-      const main = c.querySelector("main");
-      const sections = main.querySelectorAll("section[id]");
-      const curr = getCurrentVisibleSection(main, sections);
-      if (curr) {
-        lastSectionByContainer[c.id] = curr.id;
+    // b) Capture the current visible section in the container we're LEAVING
+    const currentlyActive = document.querySelector("#creative.activated, #technologist.activated");
+    if (currentlyActive) {
+      const activeMain = currentlyActive.querySelector("main");
+      const activeSections = activeMain.querySelectorAll("section[id]");
+      const activeCurr = getCurrentVisibleSection(activeMain, activeSections);
+      if (activeCurr) {
+        lastSectionByContainer[currentlyActive.id] = activeCurr.id;
+        console.log(`Leaving [${currentlyActive.id}], saving section:`, activeCurr.id);
       }
-    });
+    }
 
     // c) pick the section to restore (or default to the very first)
-    const firstId   = container.querySelector("section[id]").id;
+    const firstSection = container.querySelector("section[id]");
+    const firstId = firstSection ? firstSection.id : null;
     const restoreId = lastSectionByContainer[container.id] || firstId;
-    const target    = container.querySelector(`#${restoreId}`);
+    const target = restoreId ? container.querySelector(`#${restoreId}`) : firstSection;
+    
+    console.log(`Entering [${container.id}], restoring section:`, restoreId);
 
     // d) flip classes NOW so CSS begins the width transition
     document.querySelectorAll("#creative, #technologist").forEach(el => {
@@ -93,13 +118,19 @@ document.querySelectorAll("#creative, #technologist").forEach(container => {
         if (target) {
           const main = container.querySelector('main');
           if (target && main) {
-            main.scrollTo({
-              left:     target.offsetLeft,
-              behavior: 'instant'
-            });
+            // Small delay to ensure layout is settled
+            setTimeout(() => {
+              main.scrollTo({
+                left:     target.offsetLeft,
+                behavior: 'instant'
+              });
+              console.log(`Scrolled [${container.id}] to:`, target.id, 'at offsetLeft:', target.offsetLeft);
+            }, 50);
           }
         }
-        history.replaceState(null, "", `#${restoreId}`);
+        if (restoreId) {
+          history.replaceState(null, "", `#${restoreId}`);
+        }
       }
     }
 
@@ -115,10 +146,13 @@ document.querySelectorAll("#creative, #technologist").forEach(container => {
             left:     target.offsetLeft,
             behavior: 'instant'
           });
+          console.log(`Fallback: Scrolled [${container.id}] to:`, target.id);
         }
       }
-      history.replaceState(null, "", `#${restoreId}`);
-    }, 500); // match CSS 250ms + cushion
+      if (restoreId) {
+        history.replaceState(null, "", `#${restoreId}`);
+      }
+    }, 600); // match CSS 250ms + cushion
 
     /* (Optional) Pin the window vertical scroll 
      * If you want absolute insurance that nothing ever moves the page vertically, 
@@ -342,19 +376,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Enable ←/→ keyboard nav
+    // Enable ←/→ keyboard nav with proper debouncing
     const main = container.querySelector("main");
     if (!main) return;
     main.setAttribute("tabindex", "0");
+
+    let keyNavTimeout = null;
+    let isNavigating = false;
 
     main.addEventListener("keydown", (e) => {
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
       
       // Prevent default to stop any browser scroll behavior
       e.preventDefault();
+      
+      // Debounce: ignore rapid keypresses
+      if (isNavigating) return;
+      
+      isNavigating = true;
 
       const currentSection = getCurrentVisibleSection(main, sections);
-      if (!currentSection) return;
+      if (!currentSection) {
+        isNavigating = false;
+        return;
+      }
 
       const currentIndex = sectionIds.indexOf(currentSection.id);
       const targetIndex = e.key === "ArrowLeft"
@@ -370,8 +415,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         history.replaceState(null, "", `#${sectionIds[targetIndex]}`);
       }
+      
+      // Reset the navigation lock after scroll completes
+      setTimeout(() => {
+        isNavigating = false;
+      }, 400); // Match smooth scroll duration
     });
-/* */
 
   }
 
