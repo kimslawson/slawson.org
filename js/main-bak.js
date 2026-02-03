@@ -13,14 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const sections = main.querySelectorAll("section[id]");
     if (!main || !sections.length) return;
 
-    let scrollTimeout;
-    // on every scroll, debounced snap-read the current section
+    // on every scroll, snap-read the current section
     main.addEventListener("scroll", () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        const curr = getCurrentVisibleSection(main, sections);
-        if (curr) lastSectionByContainer[container.id] = curr.id;
-      }, 100); // wait for scroll to settle
+      const curr = getCurrentVisibleSection(main, sections);
+      if (curr) lastSectionByContainer[container.id] = curr.id;
     });
   });
 });
@@ -58,34 +54,24 @@ function linkify(text) {
 // ---------------------------------------------
 document.querySelectorAll("#creative, #technologist").forEach(container => {
   container.addEventListener("click", () => {
-    // a) if it's already active, do nothing
+    // a) if it’s already active, do nothing
     if (container.classList.contains("activated")) return;
 
-    // b) IMPORTANT: Capture the currently visible section in BOTH containers before switching
-    document.querySelectorAll("#creative, #technologist").forEach(c => {
-      const main = c.querySelector("main");
-      const sections = main.querySelectorAll("section[id]");
-      const curr = getCurrentVisibleSection(main, sections);
-      if (curr) {
-        lastSectionByContainer[c.id] = curr.id;
-      }
-    });
-
-    // c) pick the section to restore (or default to the very first)
+    // b) pick the section to restore (or default to the very first)
     const firstId   = container.querySelector("section[id]").id;
     const restoreId = lastSectionByContainer[container.id] || firstId;
     const target    = container.querySelector(`#${restoreId}`);
 
-    // d) flip classes NOW so CSS begins the width transition
+    // c) flip classes NOW so CSS begins the width transition
     document.querySelectorAll("#creative, #technologist").forEach(el => {
       el.classList.toggle("activated",  el === container);
       el.classList.toggle("background", el !== container);
       el.classList.remove("initial", "pre-activated");
     });
 
-    // e) once that width animation finishes, do our scroll + hash
+    // d) once that width animation finishes, do our scroll + hash
     function onTransitionEnd(e) {
-      // only fire on our container's width transition
+      // only fire on our container’s width transition
       if (e.target === container && e.propertyName === "width") {
         container.removeEventListener("transitionend", onTransitionEnd);
         clearTimeout(fallback);
@@ -105,7 +91,7 @@ document.querySelectorAll("#creative, #technologist").forEach(container => {
 
     container.addEventListener("transitionend", onTransitionEnd);
 
-    // f) fallback in case transitionend doesn't fire
+    // e) fallback in case transitionend doesn’t fire
     const fallback = setTimeout(() => {
       container.removeEventListener("transitionend", onTransitionEnd);
       if (target) {
@@ -122,7 +108,7 @@ document.querySelectorAll("#creative, #technologist").forEach(container => {
 
     /* (Optional) Pin the window vertical scroll 
      * If you want absolute insurance that nothing ever moves the page vertically, 
-     * after you've swapped classes you can re-pin the window at the very top
+     * after you’ve swapped classes you can re-pin the window at the very top
      */
     // after you scroll <main> and swap .activated/.background…
     //window.scrollTo({ top: 0, behavior: 'instant' });
@@ -245,22 +231,30 @@ function matchHash() {
       });
     }
 
-    // 3) reset the page's vertical scroll so your <aside> remains in view
+    // 3) reset the page’s vertical scroll so your <aside> remains in view
     window.scrollTo({ top: 0, behavior: "instant" });
   }, 500);
 }
 
 // add the function above to both content load and hash change
 document.addEventListener("DOMContentLoaded", () => {
-  // Set up the section class/id mapping to handle multi-match sections
+  window.addEventListener('hashchange', matchHash);
+  matchHash(); // run once on initial load
+});
+
+
+// -------------------------------
+// Nav highlight on section intersection
+// -------------------------------
+// now updated to match id or (single) class on section
+document.addEventListener("DOMContentLoaded", () => {
   function setupNavObserver(containerId) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    const navLinks = container.querySelectorAll("nav a[href^='#']");
+    const sections = container.querySelectorAll("section");
 
-    const navLinks = container.querySelectorAll("aside nav a[href^='#']");
-    const sections = container.querySelectorAll("main section[id]");
+    if (!container || sections.length === 0) return;
 
-    // Build a Map of section → { id, className }
     const sectionMap = new Map();
 
     sections.forEach(section => {
@@ -349,9 +343,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     main.addEventListener("keydown", (e) => {
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-      
-      // Prevent default to stop any browser scroll behavior
-      e.preventDefault();
 
       const currentSection = getCurrentVisibleSection(main, sections);
       if (!currentSection) return;
@@ -363,11 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const targetSection = sections[targetIndex];
       if (targetSection) {
-        // Use main.scrollTo instead of scrollIntoView to avoid browser snap interference
-        main.scrollTo({
-          left: targetSection.offsetLeft,
-          behavior: "smooth"
-        });
+//        targetSection.scrollIntoView({ behavior: "smooth", inline: "start" });
+        targetSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
         history.replaceState(null, "", `#${sectionIds[targetIndex]}`);
       }
     });
