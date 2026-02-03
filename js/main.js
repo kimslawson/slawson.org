@@ -15,7 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let scrollTimeout;
     // on every scroll, debounced snap-read the current section
+    // BUT ONLY if this container is currently active
     main.addEventListener("scroll", () => {
+      // Ignore scroll events from inactive containers
+      if (!container.classList.contains("activated")) {
+        console.log(`[${container.id}] ignoring scroll (not active)`);
+        return;
+      }
+      
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         const curr = getCurrentVisibleSection(main, sections);
