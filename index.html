@@ -6,6 +6,15 @@
   <title>Kim Slawson: Designer &amp; Developer</title>
   <meta name="description" content="DESIGN: Optimized user experience for mobile, web, and print media. &para; DEVELOPMENT: Rapid iteration from vision to mockup to reality. &para; TECHNOLOGY: IT support & solutions for businesses & individuals. &para; MANAGEMENT: Fractional CTO and project management services.">
 
+  <script>
+    // darkmode set before page paint
+    const stored = localStorage.getItem('colorScheme');
+    if (stored === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else if (stored === 'light') {
+        document.documentElement.classList.add('light');
+    }
+  </script>
   <meta name="author" content="Kim Slawson">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">

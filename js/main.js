@@ -3,6 +3,31 @@
  */
 
 // ——————————————————————————————————————————————
+// detect light/darkmode preference and store manual selection
+// ——————————————————————————————————————————————
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+mq.addEventListener('change', () => {
+    if (!localStorage.getItem('colorScheme')) {
+        document.documentElement.classList.remove('dark', 'light');
+        // Sync toggle to new OS state
+        const darkmodeToggles = document.querySelectorAll('.darkmode');
+        darkmodeToggles.forEach(toggle => { toggle.checked = mq.matches; });
+    }
+});
+
+function toggleDarkMode(forceDark) {
+    document.documentElement.classList.toggle('dark', forceDark);
+    document.documentElement.classList.toggle('light', !forceDark);
+    localStorage.setItem('colorScheme', forceDark ? 'dark' : 'light');
+}
+
+function clearColorSchemePreference() {
+    localStorage.removeItem('colorScheme');
+    document.documentElement.classList.remove('dark', 'light');
+}
+
+// ——————————————————————————————————————————————
 // Keep track of last visible section per container
 // ——————————————————————————————————————————————
 const lastSectionByContainer = {};  // { creative: "portfolio", technologist: "softwarehardware", … }
@@ -495,10 +520,18 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const darkmodeToggles = document.querySelectorAll('.darkmode');
 
+  // Set initial checked state to match what the <head> script already applied
+  const stored = localStorage.getItem('colorScheme');
+  const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = stored === 'dark' || (!stored && osDark);
+  darkmodeToggles.forEach(toggle => { toggle.checked = isDark; });
+
   darkmodeToggles.forEach(toggle => {
     toggle.addEventListener('change', function () {
       const isChecked = toggle.checked;
-      document.documentElement.classList.toggle('dark', isChecked);
+
+      // Use the shared function so localStorage and both classes stay in sync
+      toggleDarkMode(isChecked);
 
       // Sync all other toggles to match
       darkmodeToggles.forEach(other => {
@@ -507,8 +540,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-
 
 
 /* mobile blob navigation */

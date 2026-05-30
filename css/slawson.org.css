@@ -1,6 +1,5 @@
 /* solarized colors as CSS variables, from
  * https://gist.github.com/x-zvf/a8b84f5e8065e39cab68e725c4dd1255 */
-
 :root {
     --base03: #002b36;
     --base02: #073642;
@@ -18,7 +17,6 @@
     --blue: #268bd2;
     --cyan: #2aa198;
     --green: #859900;
-
     --technologistbg: white;
 }
 :root.dark {
@@ -31,11 +29,9 @@
     --base01: #93a1a1;
     --base02: #eee8d5;
     --base03: #fdf6e3;
-
     --technologistbg: black;
     background-color: black;
 }
-
 /* darkmode tweaks */
 .dark #creative .logo {
     box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
@@ -54,13 +50,12 @@
     filter: brightness(0.75);
 }
 .dark .dribbble-shots-list li {
-    border: 10px solid black;
+    border: 10px solid black !important;
 }
 .dark .dribbble-shots-list .item-title,
 .dark .dribbble-shots-list .item-description {
-    background-color: black;
+    background-color: black !important;
 }
-
 /* switch the base colors to solarized dark automatically, and apply
  * dark mode tweaks automatically, based on user preference */
 @media (prefers-color-scheme: dark) {
@@ -73,7 +68,6 @@
         --base01: #93a1a1;
         --base02: #eee8d5;
         --base03: #fdf6e3;
-
         --technologistbg: black;
         background-color: black;
     }
@@ -94,14 +88,49 @@
         filter: brightness(0.75);
     }
     .dribbble-shots-list li {
-        border: 10px solid black;
+        border: 10px solid black !important;
     }
     .dribbble-shots-list .item-title,
     .dribbble-shots-list .item-description {
-        background-color: black;
+        background-color: black !important;
     }
 }
-
+/* manual light override: user has explicitly chosen light mode despite OS dark preference */
+:root.light {
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
+    --base2: #eee8d5;
+    --base3: #fdf6e3;
+    --technologistbg: white;
+    background-color: white;
+}
+:root.light #creative .logo {
+    box-shadow: none;
+}
+:root.light #technologist {
+    filter: none;
+    --base01: #93a1a1;
+}
+:root.light #portfolio img,
+:root.light .blog img,
+:root.light #games img,
+:root.light #resume img {
+    filter: none;
+}
+:root.light .logo {
+    filter: none;
+}
+:root.light .dribbble-shots-list li {
+    border: 10px solid white !important;
+}
+:root.light .dribbble-shots-list .item-title,
+:root.light .dribbble-shots-list .item-description {
+    background-color: white !important;
+}
 html {
     /* to fix the dumb dynamic island/addressbar overlap at top & bottom */
     /* see https://www.reddit.com/r/webdev/comments/1no6j9u/ios_26_and_the_viewport_chrome/ */
