@@ -33,6 +33,73 @@
     --base03: #fdf6e3;
 
     --technologistbg: black;
+    background-color: black;
+}
+
+/* darkmode tweaks */
+.dark #creative .logo {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
+}
+.dark #technologist {
+    filter: brightness(0.75);
+    --base01: white;
+}
+.dark #portfolio img,
+.dark .blog img,
+.dark #games img,
+.dark #resume img {
+    filter: brightness(0.5);
+}
+.dark .logo {
+    filter: brightness(0.75);
+}
+.dark .dribbble-shots-list li {
+    border: 10px solid black;
+}
+.dark .dribbble-shots-list .item-title,
+.dark .dribbble-shots-list .item-description {
+    background-color: black;
+}
+
+/* switch the base colors to solarized dark automatically, and apply
+ * dark mode tweaks automatically, based on user preference */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --base3: #002b36;
+        --base2: #073642;
+        --base1: #586e75;
+        --base0: #657b83;
+        --base00: #839496;
+        --base01: #93a1a1;
+        --base02: #eee8d5;
+        --base03: #fdf6e3;
+
+        --technologistbg: black;
+        background-color: black;
+    }
+    #creative .logo {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
+    }
+    #technologist {
+        filter: brightness(0.75);
+        --base01: white;
+    }
+    #portfolio img,
+    .blog img,
+    #games img,
+    #resume img {
+        filter: brightness(0.5);
+    }
+    .logo {
+        filter: brightness(0.75);
+    }
+    .dribbble-shots-list li {
+        border: 10px solid black;
+    }
+    .dribbble-shots-list .item-title,
+    .dribbble-shots-list .item-description {
+        background-color: black;
+    }
 }
 
 html {
@@ -96,31 +163,6 @@ body {
 .tags span,
 .tags span a {
     color: var(--base01);
-}
-
-/* darkmode tweaks */
-.dark #creative .logo {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
-}
-.dark #technologist {
-    filter: brightness(0.75);
-    --base01: white;
-}
-.dark #portfolio img,
-.dark .blog img,
-.dark #games img,
-.dark #resume img {
-    filter: brightness(0.5);
-}
-.dark .logo {
-    filter: brightness(0.75);
-}
-.dark .dribbble-shots-list li {
-    border: 10px solid black;
-}
-.dark .dribbble-shots-list .item-title,
-.dark .dribbble-shots-list .item-description {
-    background-color: black;
 }
 
 /* hide irrelevant items */
@@ -246,12 +288,14 @@ footer.mobile {
     background-color: var(--technologistbg);
 }
 #creative .logo {
-    width: 33%;
+    /* use max- otherwise box-shadow has padding and looks bad */
+    max-width: 33%;
 }
 #creative.initial .logo {
     /* specify both width and height for horizontal layout */
     /* otherwise logo is too big and overflows vertical container */
-    height: 33%;
+    /* use max- otherwise box-shadow has padding and looks bad */
+    max-height: 33%;
 }
 #technologist .logo {
     width: 36.33%; /* KP logo size adjust */
