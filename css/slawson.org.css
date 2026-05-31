@@ -840,6 +840,8 @@ footer .toggle {
 	background: #dddddd;
     /* light grey to match tech accents */
 }
+
+/* reset button for stored darkmode state */
 .darkmode-reset {
     display: none;
     background: none;
@@ -850,6 +852,9 @@ footer .toggle {
     opacity: 0.4;
     padding: 0 0.25em;
     vertical-align: baseline;
+    transform-origin: 50% calc(50% + 0.05em);
+    /* the undo glyph needs to rotate around its center */
+    /* sweating the subpixels... Woz would be proud */
 }
 footer .darkmode-reset {
     vertical-align: middle;
@@ -860,6 +865,20 @@ footer .darkmode-reset {
 /* shown only when a stored preference is active */
 .has-stored-scheme .darkmode-reset {
     display: inline;
+}
+@keyframes darkmode-reset-spin {
+    from {
+        transform: rotate(0deg);
+        opacity: 0.4;
+    }
+    to {
+        transform: rotate(-360deg);
+        opacity: 0;
+    }
+}
+.darkmode-reset.spinning {
+    animation: darkmode-reset-spin 0.4s ease-in forwards;
+    pointer-events: none;
 }
 
 /* blinking cursor (on profile section) */

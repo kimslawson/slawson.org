@@ -546,9 +546,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     resetButtons.forEach(btn => {
         btn.addEventListener('click', function () {
-            clearColorSchemePreference();
-            syncToggles(window.matchMedia('(prefers-color-scheme: dark)').matches);
-            syncResetVisibility();
+            btn.classList.add('spinning');
+            btn.addEventListener('animationend', function handler() {
+                btn.classList.remove('spinning');
+                btn.removeEventListener('animationend', handler);
+                clearColorSchemePreference();
+                syncToggles(window.matchMedia('(prefers-color-scheme: dark)').matches);
+                syncResetVisibility();
+            });
         });
     });
 });
