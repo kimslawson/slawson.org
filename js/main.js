@@ -652,7 +652,7 @@ function setupMobileNavCycler(containerId) {
 document.addEventListener("DOMContentLoaded", () => {
   setupMobileNavCycler("creative");
   setupMobileNavCycler("technologist");
-//  choreograph.tap('#creative', { after: 1000, color: 'var(--magenta)', opacity: 1, simulate: true });
+  if (typeof tour !== 'undefined') tour.firstRunCheck();
 });
 
 window.addEventListener("load", () => {

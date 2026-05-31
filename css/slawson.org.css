@@ -884,6 +884,40 @@ footer .darkmode-reset {
     pointer-events: none;
 }
 
+/* tour trigger button (?) */
+.tour-trigger {
+    display: inline;
+    background: none;
+    border: 1px solid var(--base01);
+    border-radius: 50%;
+    color: var(--base01);
+    cursor: pointer;
+    font-size: 0.8em;
+    line-height: 1;
+    width: 1.6em;
+    height: 1.6em;
+    padding: 0;
+    vertical-align: middle;
+    opacity: 0.45;
+    margin-left: 0.4em;
+    font-family: inherit;
+}
+.tour-trigger:hover {
+    opacity: 1;
+}
+
+/* keyboard key glyphs used in tour tooltip */
+kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-family: monospace;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
 /* blinking cursor (on profile section) */
 @keyframes cursor-blink {
   0% {
