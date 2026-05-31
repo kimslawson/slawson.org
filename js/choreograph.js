@@ -93,9 +93,9 @@ const choreograph = (() => {
         ? 16 * t * t * t * t * t
         : 1 + 16 * (--t) * t * t * t * t,
 
-    // subtle bounce, short and snappy
+    // subtle bounce, short and snappy; cos(3.5π)=0 so f(1)=1 exactly
     spring: t =>
-      1 - Math.cos(t * Math.PI * 3) * Math.exp(-t * 5) * 0.4,
+      1 - Math.exp(-8 * t) * Math.cos(t * Math.PI * 3.5),
 
     easeOutElastic: t => {
       const p = 0.3;
