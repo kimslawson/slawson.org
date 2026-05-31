@@ -323,23 +323,35 @@ function matchHash() {
   }, 500);
 }
 
-// Intercept anchor clicks to prevent the browser's native scroll-to-anchor,
-// which fires before our panel transitions and causes a layout gap on mobile.
+// Intercept ALL internal anchor clicks to prevent the browser's native
+// scroll-to-anchor, which calculates position before transitions settle
+// and causes a vertical gap on mobile.
 document.addEventListener('click', e => {
   const anchor = e.target.closest('a[href^="#"]');
   if (!anchor) return;
   const hash = anchor.getAttribute('href');
   if (!hash || hash === '#') return;
-  // Only intercept links pointing to sections inside our panels
   const targetEl = document.getElementById(hash.substring(1));
   if (!targetEl) return;
   const panel = targetEl.closest('#creative, #technologist');
   if (!panel) return;
-  e.preventDefault();
-  history.pushState(null, '', hash);
-  matchHash();
-});
 
+  e.preventDefault();
+
+  if (panel.classList.contains('activated')) {
+    // Same panel: just scroll horizontally to the target section,
+    // preserving existing nav behaviour without touching the window scroll
+    const main = targetEl.closest('main');
+    if (main) {
+      main.scrollTo({ left: targetEl.offsetLeft, behavior: 'smooth' });
+    }
+    history.pushState(null, '', hash);
+  } else {
+    // Different panel: full panel switch via matchHash
+    history.pushState(null, '', hash);
+    matchHash();
+  }
+});
 // add the function above to both content load and hash change
 document.addEventListener("DOMContentLoaded", () => {
   // Set up the section class/id mapping to handle multi-match sections
