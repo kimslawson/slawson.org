@@ -7,12 +7,17 @@
 // ——————————————————————————————————————————————
 const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
+function syncResetVisibility() {
+    const hasStored = !!localStorage.getItem('colorScheme');
+    document.documentElement.classList.toggle('has-stored-scheme', hasStored);
+}
+
 mq.addEventListener('change', () => {
     if (!localStorage.getItem('colorScheme')) {
         document.documentElement.classList.remove('dark', 'light');
-        // Sync toggle to new OS state
         const darkmodeToggles = document.querySelectorAll('.darkmode');
         darkmodeToggles.forEach(toggle => { toggle.checked = mq.matches; });
+        syncResetVisibility();
     }
 });
 
@@ -518,27 +523,34 @@ document.addEventListener("DOMContentLoaded", function () {
 // On clicking any dark toggle, toggle the class on html
 // -------------------------------
 document.addEventListener("DOMContentLoaded", function () {
-  const darkmodeToggles = document.querySelectorAll('.darkmode');
+    const darkmodeToggles = document.querySelectorAll('.darkmode');
+    const resetButtons = document.querySelectorAll('.darkmode-reset');
 
-  // Set initial checked state to match what the <head> script already applied
-  const stored = localStorage.getItem('colorScheme');
-  const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const isDark = stored === 'dark' || (!stored && osDark);
-  darkmodeToggles.forEach(toggle => { toggle.checked = isDark; });
+    function syncToggles(isDark) {
+        darkmodeToggles.forEach(t => { t.checked = isDark; });
+    }
 
-  darkmodeToggles.forEach(toggle => {
-    toggle.addEventListener('change', function () {
-      const isChecked = toggle.checked;
+    // Set initial toggle state and reset button visibility
+    const stored = localStorage.getItem('colorScheme');
+    const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    syncToggles(stored === 'dark' || (!stored && osDark));
+    syncResetVisibility();
 
-      // Use the shared function so localStorage and both classes stay in sync
-      toggleDarkMode(isChecked);
-
-      // Sync all other toggles to match
-      darkmodeToggles.forEach(other => {
-        if (other !== toggle) other.checked = isChecked;
-      });
+    darkmodeToggles.forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            toggleDarkMode(toggle.checked);
+            syncToggles(toggle.checked);
+            syncResetVisibility();
+        });
     });
-  });
+
+    resetButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            clearColorSchemePreference();
+            syncToggles(window.matchMedia('(prefers-color-scheme: dark)').matches);
+            syncResetVisibility();
+        });
+    });
 });
 
 
