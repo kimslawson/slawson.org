@@ -40,6 +40,7 @@
     filter: brightness(0.75);
     --base01: white;
 }
+.dark .toggle-switch,
 .dark #portfolio img,
 .dark .blog img,
 .dark #games img,
@@ -78,6 +79,7 @@
         filter: brightness(0.75);
         --base01: white;
     }
+    .toggle-switch,
     #portfolio img,
     .blog img,
     #games img,
@@ -115,6 +117,7 @@
     filter: none;
     --base01: #93a1a1;
 }
+:root.light .toggle-switch,
 :root.light #portfolio img,
 :root.light .blog img,
 :root.light #games img,
