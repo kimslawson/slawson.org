@@ -307,12 +307,11 @@ function matchHash() {
   // This prevents the empty gap that appears on mobile after anchor navigation.
   window.scrollTo({ top: 0, behavior: "instant" });
 
-  // Once the transition has settled, scroll horizontally to the target section
-  setTimeout(() => {
-    // 1) keep focus for a11y without scrolling the window
+  // Wait for the panel width transition to finish before scrolling horizontally,
+  // so offsetLeft is read from the fully-settled layout. Mirrors the splash
+  // click handler's transitionend approach.
+  function scrollToTarget() {
     target.focus({ preventScroll: true });
-
-    // 2) scroll horizontally *inside* <main>
     const main = target.closest("main");
     if (main) {
       main.scrollTo({
@@ -320,7 +319,23 @@ function matchHash() {
         behavior: "instant"
       });
     }
-  }, 500);
+  }
+
+  function onTransitionEnd(e) {
+    if (e.target === container && e.propertyName === "width") {
+      container.removeEventListener("transitionend", onTransitionEnd);
+      clearTimeout(fallback);
+      scrollToTarget();
+    }
+  }
+
+  container.addEventListener("transitionend", onTransitionEnd);
+
+  // Fallback in case transitionend doesn't fire (e.g. no transition on mobile)
+  const fallback = setTimeout(() => {
+    container.removeEventListener("transitionend", onTransitionEnd);
+    scrollToTarget();
+  }, 550);
 }
 
 // Intercept ALL internal anchor clicks to prevent the browser's native
@@ -339,8 +354,8 @@ document.addEventListener('click', e => {
   e.preventDefault();
 
   if (panel.classList.contains('activated')) {
-    // Same panel: just scroll horizontally to the target section,
-    // preserving existing nav behaviour without touching the window scroll
+    // Same panel: scroll horizontally to the target section,
+    // preserving existing nav behaviour without touching window scroll
     const main = targetEl.closest('main');
     if (main) {
       main.scrollTo({ left: targetEl.offsetLeft, behavior: 'smooth' });
@@ -352,6 +367,7 @@ document.addEventListener('click', e => {
     matchHash();
   }
 });
+
 // add the function above to both content load and hash change
 document.addEventListener("DOMContentLoaded", () => {
   // Set up the section class/id mapping to handle multi-match sections
@@ -616,6 +632,7 @@ function setupMobileNavCycler(containerId) {
   nav.addEventListener("click", (e) => {
     if (window.innerWidth > 768) return; // desktop: no cycler
     e.preventDefault();
+    e.stopPropagation(); // prevent bubbling to document anchor interceptor
 
     // advance to the next section
     currentIndex = (currentIndex + 1) % sectionIds.length;
