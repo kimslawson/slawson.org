@@ -302,7 +302,12 @@ function matchHash() {
   otherContainer.classList.remove("initial", "activated");
   otherContainer.classList.add("background");
 
-  // Focus and scroll to the target section
+  // Pin vertical scroll IMMEDIATELY, before the browser has a chance to
+  // scroll the window to the anchor target using pre-transition heights.
+  // This prevents the empty gap that appears on mobile after anchor navigation.
+  window.scrollTo({ top: 0, behavior: "instant" });
+
+  // Once the transition has settled, scroll horizontally to the target section
   setTimeout(() => {
     // 1) keep focus for a11y without scrolling the window
     target.focus({ preventScroll: true });
@@ -315,11 +320,25 @@ function matchHash() {
         behavior: "instant"
       });
     }
-
-    // 3) reset the page's vertical scroll so your <aside> remains in view
-    window.scrollTo({ top: 0, behavior: "instant" });
   }, 500);
 }
+
+// Intercept anchor clicks to prevent the browser's native scroll-to-anchor,
+// which fires before our panel transitions and causes a layout gap on mobile.
+document.addEventListener('click', e => {
+  const anchor = e.target.closest('a[href^="#"]');
+  if (!anchor) return;
+  const hash = anchor.getAttribute('href');
+  if (!hash || hash === '#') return;
+  // Only intercept links pointing to sections inside our panels
+  const targetEl = document.getElementById(hash.substring(1));
+  if (!targetEl) return;
+  const panel = targetEl.closest('#creative, #technologist');
+  if (!panel) return;
+  e.preventDefault();
+  history.pushState(null, '', hash);
+  matchHash();
+});
 
 // add the function above to both content load and hash change
 document.addEventListener("DOMContentLoaded", () => {
