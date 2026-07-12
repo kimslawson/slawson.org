@@ -1,4 +1,4 @@
-/* solarized colors as CSS variables, from
+/* solarized colors as CSS variables, from 
  * https://gist.github.com/x-zvf/a8b84f5e8065e39cab68e725c4dd1255 */
 :root {
     --base03: #002b36;
@@ -33,9 +33,11 @@
     background-color: black;
 }
 /* darkmode tweaks */
+/* nevermind this, the shadow looks bad
 .dark #creative .logo {
     box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
 }
+*/
 .dark #technologist {
     filter: brightness(0.75);
     --base01: white;
@@ -72,9 +74,11 @@
         --technologistbg: black;
         background-color: black;
     }
+/* nope looks bad
     #creative .logo {
         box-shadow: 0 0 10px rgba(0, 0, 0, 50%);
     }
+*/
     #technologist {
         filter: brightness(0.75);
         --base01: white;
@@ -370,7 +374,7 @@ footer.mobile {
 
 #creative.activated .logo {
     position: relative;
-    width: 66%;
+    width: 62%;
     margin: 0;
     left: 50px;
     top: 50px;
@@ -379,7 +383,7 @@ footer.mobile {
 }
 #technologist.activated .logo {
     position: relative;
-    width: 72%;
+    width: 66%;
     margin: 0;
     left: 40px;
     top: 45px;
@@ -396,8 +400,47 @@ footer.mobile {
 */
 
 .activated aside {
-    flex: 0 0 200px;
+    flex: 0 0 230px;
+    /* scrollable sidebar: */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
+
+/* scrollable sidebar: prevent flex children from shrinking to fit;
+   let the container scroll instead */
+.activated aside > * {
+    flex-shrink: 0;
+}
+
+/* scrollable sidebar: bring nav into flow so it contributes to scroll height */
+.activated aside nav {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding-left: 50px;
+    margin-top: 50px; /* accounts for the logo's position: relative; top: 50px visual offset */
+    padding-top: 1.5lh;
+    padding-bottom: 1lh;
+}
+#technologist.activated aside nav {
+    padding-top: 1.1lh;
+}
+
+/* scrollable sidebar: bring footer into flow; push to bottom when space allows */
+.activated aside footer {
+    position: static;
+    bottom: auto;
+    left: auto;
+    padding-left: 50px;
+    padding-bottom: 50px; 
+    margin-top: auto;     /* sticks to bottom on tall screens; scrolls after nav on short ones */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
 .initial aside,
 .background aside {
     display: flex;
@@ -1170,16 +1213,36 @@ ul.serviceareas {
   .activated aside {
     height: 84px;
   }
-  aside nav {
+
+  /* reset desktop flex-column sidebar for mobile — aside is a fixed 84px bar here */
+  .activated aside {
+    display: block;
+    overflow-y: visible;
+  }
+
+  /* desktop display:flex on this rule outranks the general footer { display: none }
+     rule in mobile; restore the intended behavior explicitly */
+  .activated aside footer {
+    display: none;
+  }
+
+  .activated aside nav,
+  #technologist.activated aside nav {
+    position: absolute;   /* corner widget: pin to panel top-right, out of flow */
     top: 20px;
     right: 5px;
     left: unset;
+    padding: 0;           /* cancel desktop in-flow padding on all sides
+                             (grouped ID selector above lets this beat the
+                             #technologist padding-top rule by source order) */
+    margin-top: 0;
     transform-origin: top right;
     transform: scale(0.375);
     /* make sure it's wide enough to contain the
      * bold increase in width on .current li */
     width: 175px !important;
   }
+
   nav li {
     line-height: 0.8;
     transform: scale(0.75);
