@@ -307,10 +307,19 @@ function matchHash() {
   // This prevents the empty gap that appears on mobile after anchor navigation.
   window.scrollTo({ top: 0, behavior: "instant" });
 
+  // The browser's native scroll-to-fragment also scrolls overflow:hidden
+  // ancestors (they are programmatic scroll containers), and .outer-container
+  // never un-scrolls because #creative leaks overflow into it. Pin it too.
+  // (overflow: clip in the CSS prevents this outright in modern engines;
+  // this covers engines that don't support clip.)
+  const outer = document.querySelector('.outer-container');
+  if (outer) { outer.scrollTop = 0; outer.scrollLeft = 0; }
+
   // Wait for the panel width transition to finish before scrolling horizontally,
   // so offsetLeft is read from the fully-settled layout. Mirrors the splash
   // click handler's transitionend approach.
   function scrollToTarget() {
+    if (outer) { outer.scrollTop = 0; outer.scrollLeft = 0; }
     target.focus({ preventScroll: true });
     const main = target.closest("main");
     if (main) {

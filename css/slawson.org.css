@@ -289,7 +289,9 @@ footer.mobile {
 }
 
 .outer-container {
-    overflow: hidden;
+    display: flow-root; /* contain the floated panels explicitly (was implicit via overflow: hidden's BFC) */
+    overflow: hidden;   /* fallback: engines without overflow: clip support (see JS pin in matchHash) */
+    overflow: clip;     /* not a scroll container: the UA's scroll-to-fragment can't scroll it */
 }
 
 #creative,
@@ -826,9 +828,9 @@ main blockquote {
 /* toggle switches
  * from https://codepen.io/morgoe/pen/VvzWQg */
 .toggle {
-    position: relative; /* fix scroll overflow due to excessive vertical size */
 	cursor: pointer;
 	display: inline-block;
+    position: relative; /* fix scroll overflow due to excessive vertical size */
 }
 footer .toggle {
     position: relative;
