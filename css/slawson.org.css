@@ -826,6 +826,7 @@ main blockquote {
 /* toggle switches
  * from https://codepen.io/morgoe/pen/VvzWQg */
 .toggle {
+    position: relative; /* fix scroll overflow due to excessive vertical size */
 	cursor: pointer;
 	display: inline-block;
 }
