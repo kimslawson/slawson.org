@@ -903,14 +903,25 @@ footer .toggle {
     font-size: 1.5em;
     opacity: 0.4;
     padding: 0 0.25em;
+    position: relative;
     vertical-align: baseline;
+    /* drop the arrow's ink center onto the optical middle of the label text.
+       0.3708em = the arrow glyph's ink-center height above its baseline (own
+       em, from the font tables); 7.23px = middle of Mercury's title-case ink
+       band (ascender +0.741em, overshoot -0.018em) at the 20px inline labels */
+    top: calc(0.3708em - 7.23px);
     transform-origin: 0.6826em 0.5042em;
+    /* the undo glyph needs to rotate around its ink center. The arrow ships
+       in its own tiny webfont (see css/fonts/stylesheet.css) so its ink is a
+       known constant on every platform and engine; the origin above is
+       computed from that glyph's measured geometry. */
     /* the undo glyph needs to rotate around its center */
     /* sweating the subpixels... Woz would be proud */
 }
 footer .darkmode-reset {
-    vertical-align: middle;
-    top: 3px; /* pair with footer .toggle's nudge so arrow and label share a baseline */
+    /* same construction at the 16px footer label (text middle 5.8px), plus
+       footer .toggle's 3px nudge so the arrow tracks the label beside it */
+    top: calc(3px + 0.3708em - 5.8px);
 }
 .darkmode-reset:hover {
     opacity: 1;
