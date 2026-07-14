@@ -899,16 +899,18 @@ footer .toggle {
     border: none;
     color: var(--base01);
     cursor: pointer;
+    font-family: darkmode_reset_arrow, mercurytext_g2_roman;
     font-size: 1.5em;
     opacity: 0.4;
     padding: 0 0.25em;
     vertical-align: baseline;
-    transform-origin: 50% calc(50% + 0.05em);
+    transform-origin: 0.6826em 0.5042em;
     /* the undo glyph needs to rotate around its center */
     /* sweating the subpixels... Woz would be proud */
 }
 footer .darkmode-reset {
     vertical-align: middle;
+    top: 3px; /* pair with footer .toggle's nudge so arrow and label share a baseline */
 }
 .darkmode-reset:hover {
     opacity: 1;

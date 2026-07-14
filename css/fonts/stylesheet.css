@@ -55,3 +55,15 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    /* U+21BA only: the darkmode-reset arrow (812-byte subset of DejaVu Sans,
+       Bitstream Vera license). Mercury Text has no arrows, so without this
+       every OS substitutes its own symbol font: different shape, different
+       metrics, and no fixed point to rotate around. Vertical metrics are
+       normalized (hhea == OS/2 typo == OS/2 win, USE_TYPO_METRICS set) so
+       every engine computes the same baseline from it. */
+    font-family: 'darkmode_reset_arrow';
+    src: url('u21ba-arrow.woff2') format('woff2');
+    font-display: block;
+}
