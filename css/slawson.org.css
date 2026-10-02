@@ -342,7 +342,7 @@ footer.mobile {
 #technologist.initial .logo {
     /* specify both width and height for horizontal layout */
     /* otherwise logo is too big and overflows vertical container */
-    height: 36.33%; /* KP logo size adjust */
+    max-height: 36.33%; /* KP logo size adjust */
 }
 #creative .caption, 
 #technologist .caption {
